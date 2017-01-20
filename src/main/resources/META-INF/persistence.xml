@@ -32,8 +32,8 @@
 
             <!-- Postavke za spajanje na bazu podataka -->
             <!-- ===================================== -->
-            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver "/>
-            <property name="hibernate.connection.url" value="mysql://vp913q1c6xdmegax:rnqes7yekzr6do4t@sabaik6fx8he7pua.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/t9n6zvulavvuz4zl"/>
+            <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>
+            <property name="hibernate.connection.url" value="jdbc:mysql://vp913q1c6xdmegax:rnqes7yekzr6do4t@sabaik6fx8he7pua.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/t9n6zvulavvuz4zl"/>
             <!--<property name="hibernate.connection.username" value="notifyDBAdmin"/>-->
             <!--<property name="hibernate.connection.password" value="notifyDBPassword"/>-->
             <property name="hibernate.connection.CharSet" value="utf8"/>
