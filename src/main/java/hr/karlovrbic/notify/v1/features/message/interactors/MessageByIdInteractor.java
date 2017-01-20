@@ -5,8 +5,6 @@ import hr.karlovrbic.notify.v1.features.message.IMessage;
 import hr.karlovrbic.notify.v1.model.entity.Message;
 import hr.karlovrbic.notify.v1.model.json.MessageJson;
 
-import static com.sun.org.apache.xml.internal.serializer.utils.Utils.messages;
-
 /**
  * Created by Karlo Vrbic on 03.11.16..
  */
@@ -17,7 +15,7 @@ public class MessageByIdInteractor implements IMessage.GetByIdInteractor {
         Message message = JPAEMProvider.getEntityManager().find(Message.class, id);
 
         MessageJson messageJson = null;
-        if (messages != null) {
+        if (message != null) {
             messageJson = message.toJson();
         }
         JPAEMProvider.close();
