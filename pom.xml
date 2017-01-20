@@ -30,17 +30,6 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
-
-            <plugin>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.0.2</version>
-                <configuration>
-                    <warName>notify-backend</warName>
-                    <webappDirectory>
-                        /opt/tomcat/webapps/notify-backend
-                    </webappDirectory>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 
