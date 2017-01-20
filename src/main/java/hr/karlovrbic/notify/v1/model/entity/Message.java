@@ -59,9 +59,17 @@ public class Message implements Serializable {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Column(name = COLUMN_CONTENT, length = 1024, nullable = false)
     public String getContent() {
         return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -70,21 +78,13 @@ public class Message implements Serializable {
         return event;
     }
 
+    public void setEvent(Event messageAndEvents) {
+        this.event = messageAndEvents;
+    }
+
     @OneToMany(mappedBy = Comment.COLUMN_MESSAGE, cascade = CascadeType.PERSIST, orphanRemoval = true)
     public List<Comment> getComments() {
         return comments;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public void setEvent(Event messageAndEvents) {
-        this.event = messageAndEvents;
     }
 
     public void setComments(List<Comment> comments) {

@@ -26,12 +26,6 @@ public class MessageCreateRequest {
     @XmlElement(name = ATTRIBUTE_EVENT, required = true)
     private EventShortJson event;
 
-    public static MessageCreateRequest fromEntity(Message message) {
-        return new MessageCreateRequest(message.getContent(),
-                UserShortJson.fromEntity(message.getEvent().getCreator()),
-                EventShortJson.fromEntity(message.getEvent()));
-    }
-
     public MessageCreateRequest(String content, UserShortJson creator, EventShortJson event) {
         this.content = content;
         this.creator = creator;
@@ -41,24 +35,30 @@ public class MessageCreateRequest {
     public MessageCreateRequest() {
     }
 
+    public static MessageCreateRequest fromEntity(Message message) {
+        return new MessageCreateRequest(message.getContent(),
+                UserShortJson.fromEntity(message.getEvent().getCreator()),
+                EventShortJson.fromEntity(message.getEvent()));
+    }
+
     public String getContent() {
         return content;
-    }
-
-    public UserShortJson getCreator() {
-        return creator;
-    }
-
-    public EventShortJson getEvent() {
-        return event;
     }
 
     public void setContent(String content) {
         this.content = content;
     }
 
+    public UserShortJson getCreator() {
+        return creator;
+    }
+
     public void setCreator(UserShortJson creator) {
         this.creator = creator;
+    }
+
+    public EventShortJson getEvent() {
+        return event;
     }
 
     public void setEvent(EventShortJson event) {
@@ -75,14 +75,6 @@ public class MessageCreateRequest {
         @XmlElement(name = ATTRIBUTE_USERNAME, required = true)
         private String username;
 
-        public static UserShortJson fromEntity(User user) {
-            if (user == null) {
-                return null;
-            } else {
-                return new UserShortJson(user.getId(), user.getUsername());
-            }
-        }
-
         private UserShortJson(Long id, String username) {
             this.id = id;
             this.username = username;
@@ -92,16 +84,24 @@ public class MessageCreateRequest {
             this(null, null);
         }
 
+        public static UserShortJson fromEntity(User user) {
+            if (user == null) {
+                return null;
+            } else {
+                return new UserShortJson(user.getId(), user.getUsername());
+            }
+        }
+
         public Long getId() {
             return id;
         }
 
-        public String getUsername() {
-            return username;
-        }
-
         public void setId(Long id) {
             this.id = id;
+        }
+
+        public String getUsername() {
+            return username;
         }
 
         public void setUsername(String username) {
@@ -149,14 +149,6 @@ public class MessageCreateRequest {
         @XmlElement(name = ATTRIBUTE_TITLE, required = true)
         private String title;
 
-        public static EventShortJson fromEntity(Event event) {
-            if (event == null) {
-                return null;
-            } else {
-                return new EventShortJson(event.getId(), event.getTitle());
-            }
-        }
-
         private EventShortJson(Long id, String title) {
             this.id = id;
             this.title = title;
@@ -166,16 +158,24 @@ public class MessageCreateRequest {
             this(null, null);
         }
 
+        public static EventShortJson fromEntity(Event event) {
+            if (event == null) {
+                return null;
+            } else {
+                return new EventShortJson(event.getId(), event.getTitle());
+            }
+        }
+
         public Long getId() {
             return id;
         }
 
-        public String getTitle() {
-            return title;
-        }
-
         public void setId(Long id) {
             this.id = id;
+        }
+
+        public String getTitle() {
+            return title;
         }
 
         public void setTitle(String username) {

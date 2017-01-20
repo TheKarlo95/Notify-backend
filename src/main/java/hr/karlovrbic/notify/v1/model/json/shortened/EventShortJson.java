@@ -17,14 +17,6 @@ public class EventShortJson {
     @XmlElement(name = ATTRIBUTE_NAME, required = true)
     private String name;
 
-    public static EventShortJson fromEntity(Event event) {
-        if (event == null) {
-            return null;
-        } else {
-            return new EventShortJson(event.getId(), event.getTitle());
-        }
-    }
-
     private EventShortJson(Long id, String name) {
         this.id = id;
         this.name = name;
@@ -34,16 +26,24 @@ public class EventShortJson {
         this(null, null);
     }
 
+    public static EventShortJson fromEntity(Event event) {
+        if (event == null) {
+            return null;
+        } else {
+            return new EventShortJson(event.getId(), event.getTitle());
+        }
+    }
+
     public Long getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String username) {

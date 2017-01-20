@@ -20,14 +20,6 @@ public class MessageShortJson {
     @XmlElement(name = ATTRIBUTE_USERNAME, required = true)
     private String content;
 
-    public static MessageShortJson fromEntity(Message message) {
-        if (message == null) {
-            return null;
-        } else {
-            return new MessageShortJson(message.getId(), message.getContent());
-        }
-    }
-
     private MessageShortJson(Long id, String content) {
         this.id = id;
         this.content = content;
@@ -36,16 +28,24 @@ public class MessageShortJson {
     public MessageShortJson() {
     }
 
+    public static MessageShortJson fromEntity(Message message) {
+        if (message == null) {
+            return null;
+        } else {
+            return new MessageShortJson(message.getId(), message.getContent());
+        }
+    }
+
     public Long getId() {
         return id;
     }
 
-    public String getContent() {
-        return content;
-    }
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getContent() {
+        return content;
     }
 
     public void setContent(String content) {

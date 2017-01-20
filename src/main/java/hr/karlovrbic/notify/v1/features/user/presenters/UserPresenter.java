@@ -8,7 +8,6 @@ import hr.karlovrbic.notify.v1.model.json.UserJson;
 import hr.karlovrbic.notify.v1.utils.UserChecker;
 import org.apache.commons.validator.routines.EmailValidator;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,8 +32,17 @@ public final class UserPresenter implements IUser.Presenter {
         this.getEventsByCreatorIdInteractor = new EventsByCreatorIdInteractor();
     }
 
+    private static boolean isValidRequest(UserCreateRequest request) {
+        return UserChecker.isValidUserName(request.getUsername())
+                && Objects.equals(request.getPassword(), request.getPasswordConfirmation())
+                && UserChecker.isValidPassword(request.getPassword())
+                && EmailValidator.getInstance().isValid(request.getEmail())
+                && UserChecker.isValidName(request.getName())
+                && UserChecker.isValidSurname(request.getSurname());
+    }
+
     @Override
-    public UserJson createUser(@NotNull UserCreateRequest request) {
+    public UserJson createUser(UserCreateRequest request) {
         if (isValidRequest(request)) {
             return createInteractor.create(request);
         } else {
@@ -45,7 +53,7 @@ public final class UserPresenter implements IUser.Presenter {
     @Override
     public List<UserJson> getAllUsers() {
         List<UserJson> jsons = getAllInteractor.getAll();
-        if(jsons != null && !jsons.isEmpty()) {
+        if (jsons != null && !jsons.isEmpty()) {
             return jsons;
         } else {
             return null;
@@ -53,7 +61,7 @@ public final class UserPresenter implements IUser.Presenter {
     }
 
     @Override
-    public UserJson getUserById(@NotNull Long id) {
+    public UserJson getUserById(Long id) {
         if (id > 0L) {
             return getByIdInteractor.get(id);
         } else {
@@ -62,7 +70,7 @@ public final class UserPresenter implements IUser.Presenter {
     }
 
     @Override
-    public UserJson getUserByUsername(@NotNull String username) {
+    public UserJson getUserByUsername(String username) {
         if (UserChecker.isValidUserName(username)) {
             return getByUsernameInteractor.get(username);
         } else {
@@ -71,20 +79,11 @@ public final class UserPresenter implements IUser.Presenter {
     }
 
     @Override
-    public List<EventJson> getEventByCreatorId(@NotNull Long creatorId) {
+    public List<EventJson> getEventByCreatorId(Long creatorId) {
         if (creatorId > 0L) {
             return getEventsByCreatorIdInteractor.get(creatorId);
         } else {
             return null;
         }
-    }
-
-    private static boolean isValidRequest(UserCreateRequest request) {
-        return UserChecker.isValidUserName(request.getUsername())
-                && Objects.equals(request.getPassword(), request.getPasswordConfirmation())
-                && UserChecker.isValidPassword(request.getPassword())
-                && EmailValidator.getInstance().isValid(request.getEmail())
-                && UserChecker.isValidName(request.getName())
-                && UserChecker.isValidSurname(request.getSurname());
     }
 }

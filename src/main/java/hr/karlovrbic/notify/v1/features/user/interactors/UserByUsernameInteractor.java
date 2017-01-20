@@ -1,11 +1,10 @@
 package hr.karlovrbic.notify.v1.features.user.interactors;
 
-import hr.karlovrbic.notify.v1.model.entity.User;
 import hr.karlovrbic.notify.v1.dao.manager.JPAEMProvider;
 import hr.karlovrbic.notify.v1.features.user.IUser;
+import hr.karlovrbic.notify.v1.model.entity.User;
 import hr.karlovrbic.notify.v1.model.json.UserJson;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -15,7 +14,7 @@ public class UserByUsernameInteractor implements IUser.GetByUsernameInteractor {
 
     @SuppressWarnings("unchecked")
     @Override
-    public UserJson get(@NotNull String username) {
+    public UserJson get(String username) {
         List<User> users = JPAEMProvider.getEntityManager()
                 .createNamedQuery("User.selectByUsername")
                 .setParameter("username", username)

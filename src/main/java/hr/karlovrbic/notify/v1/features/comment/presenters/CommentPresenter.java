@@ -1,6 +1,5 @@
 package hr.karlovrbic.notify.v1.features.comment.presenters;
 
-import com.sun.istack.internal.NotNull;
 import hr.karlovrbic.notify.v1.features.comment.IComment;
 import hr.karlovrbic.notify.v1.features.comment.interactors.CommentByIdInteractor;
 import hr.karlovrbic.notify.v1.features.comment.interactors.CommentByMessageIdInteractor;
@@ -28,7 +27,7 @@ public class CommentPresenter implements IComment.Presenter {
     }
 
     @Override
-    public CommentJson createComment(@NotNull CommentCreateRequest request) {
+    public CommentJson createComment(CommentCreateRequest request) {
         if (isValidRequest(request)) {
             return createInteractor.create(request);
         } else {
@@ -37,7 +36,7 @@ public class CommentPresenter implements IComment.Presenter {
     }
 
     @Override
-    public List<CommentJson> getCommentByMessageId(@NotNull Long messageId) {
+    public List<CommentJson> getCommentByMessageId(Long messageId) {
         List<CommentJson> jsons = null;
 
         if (messageId > 0L) {
@@ -51,7 +50,7 @@ public class CommentPresenter implements IComment.Presenter {
     }
 
     @Override
-    public CommentJson getCommentByCommentId(@NotNull Long id) {
+    public CommentJson getCommentByCommentId(Long id) {
         if (id > 0L) {
             return getByIdInteractor.get(id);
         } else {

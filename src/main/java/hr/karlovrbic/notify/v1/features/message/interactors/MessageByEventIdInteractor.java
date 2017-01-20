@@ -1,11 +1,10 @@
 package hr.karlovrbic.notify.v1.features.message.interactors;
 
-import hr.karlovrbic.notify.v1.model.json.MessageJson;
 import hr.karlovrbic.notify.v1.dao.manager.JPAEMProvider;
 import hr.karlovrbic.notify.v1.features.message.IMessage;
 import hr.karlovrbic.notify.v1.model.entity.Message;
+import hr.karlovrbic.notify.v1.model.json.MessageJson;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,7 +15,7 @@ public class MessageByEventIdInteractor implements IMessage.GetByEventIdInteract
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<MessageJson> get(@NotNull Long eventId) {
+    public List<MessageJson> get(Long eventId) {
         List<Message> messages = JPAEMProvider.getEntityManager()
                 .createNamedQuery("Message.selectByEventId")
                 .setParameter("eventId", eventId)

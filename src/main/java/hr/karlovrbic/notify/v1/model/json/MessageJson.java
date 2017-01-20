@@ -34,18 +34,6 @@ public class MessageJson {
     @XmlElement(name = ATTRIBUTE_COMMENTS)
     private List<CommentShortJson> comments;
 
-    public static MessageJson fromEntity(Message message) {
-        List<CommentShortJson> comments = message.getComments().stream()
-                    .map(CommentShortJson::fromEntity)
-                    .collect(Collectors.toList());
-
-        return new MessageJson(message.getId(),
-                message.getContent(),
-                UserShortJson.fromEntity(message.getEvent().getCreator()),
-                EventShortJson.fromEntity(message.getEvent()),
-                comments);
-    }
-
     public MessageJson(Long id, String content, UserShortJson user, EventShortJson event, List<CommentShortJson> comments) {
         setId(id);
         setContent(content);
@@ -57,40 +45,52 @@ public class MessageJson {
     public MessageJson() {
     }
 
+    public static MessageJson fromEntity(Message message) {
+        List<CommentShortJson> comments = message.getComments().stream()
+                .map(CommentShortJson::fromEntity)
+                .collect(Collectors.toList());
+
+        return new MessageJson(message.getId(),
+                message.getContent(),
+                UserShortJson.fromEntity(message.getEvent().getCreator()),
+                EventShortJson.fromEntity(message.getEvent()),
+                comments);
+    }
+
     public Long getId() {
         return id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public UserShortJson getUser() {
-        return user;
-    }
-
-    public EventShortJson getEvent() {
-        return event;
-    }
-
-    public List<CommentShortJson> getComments() {
-        return comments;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
+    public String getContent() {
+        return content;
+    }
+
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public UserShortJson getUser() {
+        return user;
     }
 
     public void setUser(UserShortJson user) {
         this.user = user;
     }
 
+    public EventShortJson getEvent() {
+        return event;
+    }
+
     public void setEvent(EventShortJson event) {
         this.event = event;
+    }
+
+    public List<CommentShortJson> getComments() {
+        return comments;
     }
 
     public void setComments(List<CommentShortJson> comments) {

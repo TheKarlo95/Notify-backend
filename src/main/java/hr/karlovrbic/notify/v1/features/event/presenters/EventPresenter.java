@@ -1,6 +1,5 @@
 package hr.karlovrbic.notify.v1.features.event.presenters;
 
-import com.sun.istack.internal.NotNull;
 import hr.karlovrbic.notify.v1.features.event.IEvent;
 import hr.karlovrbic.notify.v1.features.event.interactors.EventAllInteractor;
 import hr.karlovrbic.notify.v1.features.event.interactors.EventByIdInteractor;
@@ -27,8 +26,16 @@ public class EventPresenter implements IEvent.Presenter {
         this.getByIdInteractor = new EventByIdInteractor();
     }
 
+    private static boolean isValidRequest(EventCreateRequest request) {
+        String title = request.getTitle();
+        String description = request.getDescription();
+
+        return title != null && title.length() >= 3
+                && description != null && description.length() >= 10 && description.length() <= 180;
+    }
+
     @Override
-    public EventJson createEvent(@NotNull EventCreateRequest request) {
+    public EventJson createEvent(EventCreateRequest request) {
         if (isValidRequest(request)) {
             return createInteractor.create(request);
         } else {
@@ -47,19 +54,11 @@ public class EventPresenter implements IEvent.Presenter {
     }
 
     @Override
-    public EventJson getEventById(@NotNull Long id) {
+    public EventJson getEventById(Long id) {
         if (id > 0L) {
             return getByIdInteractor.get(id);
         } else {
             return null;
         }
-    }
-
-    private static boolean isValidRequest(EventCreateRequest request) {
-        String title = request.getTitle();
-        String description = request.getDescription();
-
-        return title != null && title.length() >= 3
-                && description != null && description.length() >= 10 && description.length() <= 180;
     }
 }

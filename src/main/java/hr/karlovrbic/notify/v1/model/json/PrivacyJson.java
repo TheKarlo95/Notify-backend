@@ -23,16 +23,16 @@ public class PrivacyJson {
     @XmlJavaTypeAdapter(PrivacyAdapter.class)
     private hr.karlovrbic.notify.v1.model.Privacy privacy;
 
-    public static PrivacyJson fromEntity(ProfileConfiguration configuration) {
-        return new PrivacyJson(configuration.getProfilePrivacy());
-    }
-
     public PrivacyJson(hr.karlovrbic.notify.v1.model.Privacy privacy) {
         this.privacy = privacy;
     }
 
     public PrivacyJson() {
         this(null);
+    }
+
+    public static PrivacyJson fromEntity(ProfileConfiguration configuration) {
+        return new PrivacyJson(configuration.getProfilePrivacy());
     }
 
     public Privacy toEntity() {

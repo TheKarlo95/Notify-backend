@@ -20,17 +20,6 @@ public class CommentShortJson {
     @XmlElement(name = ATTRIBUTE_USERNAME, required = true)
     private String content;
 
-    public static CommentShortJson fromEntity(Comment comment) {
-        if (comment == null) {
-            return null;
-        } else {
-            if(!Hibernate.isInitialized(comment)){
-                Hibernate.initialize(comment);
-            }
-            return new CommentShortJson(comment.getId(), comment.getContent());
-        }
-    }
-
     private CommentShortJson(Long id, String content) {
         this.id = id;
         this.content = content;
@@ -40,16 +29,27 @@ public class CommentShortJson {
         this(null, null);
     }
 
+    public static CommentShortJson fromEntity(Comment comment) {
+        if (comment == null) {
+            return null;
+        } else {
+            if (!Hibernate.isInitialized(comment)) {
+                Hibernate.initialize(comment);
+            }
+            return new CommentShortJson(comment.getId(), comment.getContent());
+        }
+    }
+
     public Long getId() {
         return id;
     }
 
-    public String getContent() {
-        return content;
-    }
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getContent() {
+        return content;
     }
 
     public void setContent(String content) {

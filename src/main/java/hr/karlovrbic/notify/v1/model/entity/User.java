@@ -171,8 +171,16 @@ public class User implements Serializable {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getToken() {
         return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Column(name = COLUMN_USERNAME, length = 50, unique = true, nullable = false)
@@ -180,9 +188,17 @@ public class User implements Serializable {
         return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Column(name = COLUMN_PASSWORD, length = 50, nullable = false)
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Column(name = COLUMN_EMAIL, length = 254, unique = true, nullable = false)
@@ -190,14 +206,26 @@ public class User implements Serializable {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Column(name = COLUMN_NAME, length = 50, nullable = false)
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Column(name = COLUMN_SURNAME, length = 50, nullable = false)
     public String getSurname() {
         return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     @Temporal(TemporalType.DATE)
@@ -206,10 +234,18 @@ public class User implements Serializable {
         return birthDay;
     }
 
+    public void setBirthDay(Date birthDay) {
+        this.birthDay = birthDay;
+    }
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = COLUMN_CREATED_AT, nullable = false)
     public Date getCreatedAt() {
         return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Column(name = COLUMN_PROFILE_PICTURE, length = 50)
@@ -217,15 +253,27 @@ public class User implements Serializable {
         return profilePictureLink;
     }
 
+    public void setProfilePictureLink(String profilePictureLink) {
+        this.profilePictureLink = profilePictureLink;
+    }
+
     @Embedded
     public ProfileConfiguration getProfileConfiguration() {
         return profileConfiguration;
+    }
+
+    public void setProfileConfiguration(ProfileConfiguration profileProfileConfiguration) {
+        this.profileConfiguration = profileProfileConfiguration;
     }
 
     @OneToMany(mappedBy = Event.COLUMN_CREATOR, cascade = CascadeType.PERSIST, orphanRemoval = true)
     @OrderBy(Event.COLUMN_CREATED_AT)
     public List<Event> getCreatedEvents() {
         return createdEvents;
+    }
+
+    public void setCreatedEvents(List<Event> createdEvents) {
+        this.createdEvents = createdEvents;
     }
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -243,61 +291,13 @@ public class User implements Serializable {
         return subscribedEvents;
     }
 
+    public void setSubscribedEvents(List<Event> subscribedEvents) {
+        this.subscribedEvents = subscribedEvents;
+    }
+
     @OneToMany(mappedBy = Comment.COLUMN_CREATOR)
     public List<Comment> getComments() {
         return comments;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public void setBirthDay(Date birthDay) {
-        this.birthDay = birthDay;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public void setProfilePictureLink(String profilePictureLink) {
-        this.profilePictureLink = profilePictureLink;
-    }
-
-    public void setProfileConfiguration(ProfileConfiguration profileProfileConfiguration) {
-        this.profileConfiguration = profileProfileConfiguration;
-    }
-
-    public void setCreatedEvents(List<Event> createdEvents) {
-        this.createdEvents = createdEvents;
-    }
-
-    public void setSubscribedEvents(List<Event> subscribedEvents) {
-        this.subscribedEvents = subscribedEvents;
     }
 
     public void setComments(List<Comment> comments) {

@@ -5,7 +5,6 @@ import hr.karlovrbic.notify.v1.features.user.IUser;
 import hr.karlovrbic.notify.v1.model.entity.Event;
 import hr.karlovrbic.notify.v1.model.json.EventJson;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,7 +15,7 @@ public class EventsByCreatorIdInteractor implements IUser.GetEventsByCreatorIdIn
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<EventJson> get(@NotNull Long creatorId) {
+    public List<EventJson> get(Long creatorId) {
         List<Event> events = JPAEMProvider.getEntityManager().createNamedQuery("Event.selectByCreatorId")
                 .setParameter("creatorId", creatorId)
                 .getResultList();

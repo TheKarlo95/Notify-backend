@@ -14,6 +14,12 @@ public enum Privacy {
     @XmlEnumValue("1")PRIVATE("1"),
     @XmlEnumValue("2")PUBLIC("2");
 
+    private String num;
+
+    Privacy(String num) {
+        this.num = num;
+    }
+
     public static Privacy fromString(String num) {
         Privacy out = null;
 
@@ -27,12 +33,6 @@ public enum Privacy {
         }
 
         return out;
-    }
-
-    private String num;
-
-    Privacy(String num) {
-        this.num = num;
     }
 
     public String toNumber() {

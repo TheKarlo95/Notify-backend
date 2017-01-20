@@ -1,8 +1,8 @@
 package hr.karlovrbic.notify.v1.features.user.interactors;
 
-import hr.karlovrbic.notify.v1.model.entity.User;
 import hr.karlovrbic.notify.v1.dao.manager.JPAEMProvider;
 import hr.karlovrbic.notify.v1.features.user.IUser;
+import hr.karlovrbic.notify.v1.model.entity.User;
 import hr.karlovrbic.notify.v1.model.json.UserJson;
 
 import java.util.List;

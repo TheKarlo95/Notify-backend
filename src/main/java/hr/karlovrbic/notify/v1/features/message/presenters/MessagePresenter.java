@@ -10,7 +10,6 @@ import hr.karlovrbic.notify.v1.features.message.requests.MessageCreateRequest;
 import hr.karlovrbic.notify.v1.model.json.EventJson;
 import hr.karlovrbic.notify.v1.model.json.MessageJson;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -33,7 +32,7 @@ public class MessagePresenter implements IMessage.Presenter {
     }
 
     @Override
-    public MessageJson createMessage(@NotNull MessageCreateRequest request) {
+    public MessageJson createMessage(MessageCreateRequest request) {
         if (isValidRequest(request)) {
             return createInteractor.create(request);
         } else {
@@ -42,7 +41,7 @@ public class MessagePresenter implements IMessage.Presenter {
     }
 
     @Override
-    public List<MessageJson> getMessageByEventId(@NotNull Long eventId) {
+    public List<MessageJson> getMessageByEventId(Long eventId) {
         List<MessageJson> jsons = null;
 
         if (eventId > 0L) {
@@ -56,7 +55,7 @@ public class MessagePresenter implements IMessage.Presenter {
     }
 
     @Override
-    public MessageJson getMessageByMessageId(@NotNull Long id) {
+    public MessageJson getMessageByMessageId(Long id) {
         if (id > 0L) {
             return getByIdInteractor.get(id);
         } else {

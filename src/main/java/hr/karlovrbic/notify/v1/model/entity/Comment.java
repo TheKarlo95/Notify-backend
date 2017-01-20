@@ -49,9 +49,17 @@ public class Comment {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Column(name = COLUMN_CONTENT, length = 1024, nullable = false)
     public String getContent() {
         return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -60,22 +68,14 @@ public class Comment {
         return message;
     }
 
+    public void setMessage(Message message) {
+        this.message = message;
+    }
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = COLUMN_CREATOR, nullable = false)
     public User getCreator() {
         return creator;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public void setMessage(Message message) {
-        this.message = message;
     }
 
     public void setCreator(User creator) {

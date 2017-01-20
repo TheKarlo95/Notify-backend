@@ -1,6 +1,5 @@
 package hr.karlovrbic.notify.v1.features.comment.interactors;
 
-import com.sun.istack.internal.NotNull;
 import hr.karlovrbic.notify.v1.dao.manager.JPAEMProvider;
 import hr.karlovrbic.notify.v1.features.comment.IComment;
 import hr.karlovrbic.notify.v1.model.entity.Comment;
@@ -16,7 +15,7 @@ public class CommentByMessageIdInteractor implements IComment.GetByMessageIdInte
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<CommentJson> get(@NotNull Long eventId) {
+    public List<CommentJson> get(Long eventId) {
         List<Comment> comments = JPAEMProvider.getEntityManager()
                 .createNamedQuery("Comment.selectByMessageId")
                 .setParameter("messageId", eventId)

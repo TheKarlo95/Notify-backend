@@ -2,8 +2,8 @@ package hr.karlovrbic.notify.v1.model.json;
 
 import com.google.gson.GsonBuilder;
 import hr.karlovrbic.notify.v1.json.DateDeserializer;
-import hr.karlovrbic.notify.v1.model.json.shortened.MessageShortJson;
 import hr.karlovrbic.notify.v1.model.entity.Comment;
+import hr.karlovrbic.notify.v1.model.json.shortened.MessageShortJson;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -26,12 +26,6 @@ public class CommentJson {
     @XmlElement(name = ATTRIBUTE_MESSAGE, required = true)
     private MessageShortJson message;
 
-    public static CommentJson fromEntity(Comment comment) {
-        return new CommentJson(comment.getId(),
-                comment.getContent(),
-                MessageShortJson.fromEntity(comment.getMessage()));
-    }
-
     private CommentJson(Long id, String content, MessageShortJson message) {
         this.id = id;
         this.content = content;
@@ -41,24 +35,30 @@ public class CommentJson {
     public CommentJson() {
     }
 
+    public static CommentJson fromEntity(Comment comment) {
+        return new CommentJson(comment.getId(),
+                comment.getContent(),
+                MessageShortJson.fromEntity(comment.getMessage()));
+    }
+
     public Long getId() {
         return id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public MessageShortJson getMessage() {
-        return message;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
+    public String getContent() {
+        return content;
+    }
+
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public MessageShortJson getMessage() {
+        return message;
     }
 
     public void setMessage(MessageShortJson message) {

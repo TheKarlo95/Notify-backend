@@ -54,19 +54,6 @@ public class UserJson {
     @XmlJavaTypeAdapter(PrivacyAdapter.class)
     private PrivacyJson privacyJson;
 
-    public static UserJson fromEntity(User user) {
-        return new UserJson(user.getId(),
-                user.getUsername(),
-                user.getPassword(),
-                user.getEmail(),
-                user.getName(),
-                user.getSurname(),
-                user.getBirthDay(),
-                user.getCreatedAt(),
-                user.getProfilePictureLink(),
-                PrivacyJson.fromEntity(user.getProfileConfiguration()));
-    }
-
     private UserJson(Long id,
                      String username,
                      String password,
@@ -97,6 +84,19 @@ public class UserJson {
     public UserJson() {
     }
 
+    public static UserJson fromEntity(User user) {
+        return new UserJson(user.getId(),
+                user.getUsername(),
+                user.getPassword(),
+                user.getEmail(),
+                user.getName(),
+                user.getSurname(),
+                user.getBirthDay(),
+                user.getCreatedAt(),
+                user.getProfilePictureLink(),
+                PrivacyJson.fromEntity(user.getProfileConfiguration()));
+    }
+
     public User toEntity() {
         return new User(id,
                 username,
@@ -117,76 +117,76 @@ public class UserJson {
         return id;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public Date getBirthDay() {
-        return birthDay;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public String getProfilePictureLink() {
-        return profilePictureLink;
-    }
-
-    public PrivacyJson getPrivacyJson() {
-        return privacyJson;
-    }
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
     }
 
     public void setSurname(String surname) {
         this.surname = surname;
     }
 
+    public Date getBirthDay() {
+        return birthDay;
+    }
+
     public void setBirthDay(Date birthDay) {
         this.birthDay = birthDay;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
+    public String getProfilePictureLink() {
+        return profilePictureLink;
+    }
+
     public void setProfilePictureLink(String profilePictureLink) {
         this.profilePictureLink = profilePictureLink;
+    }
+
+    public PrivacyJson getPrivacyJson() {
+        return privacyJson;
     }
 
     public void setPrivacyJson(PrivacyJson privacyJson) {

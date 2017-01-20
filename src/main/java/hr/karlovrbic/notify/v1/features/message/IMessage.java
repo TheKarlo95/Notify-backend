@@ -4,7 +4,6 @@ import hr.karlovrbic.notify.v1.features.message.requests.MessageCreateRequest;
 import hr.karlovrbic.notify.v1.features.shared.IBase;
 import hr.karlovrbic.notify.v1.model.json.MessageJson;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -16,22 +15,22 @@ public interface IMessage {
     }
 
     interface Presenter extends IBase.Presenter {
-        MessageJson createMessage(@NotNull MessageCreateRequest eventJson);
+        MessageJson createMessage(MessageCreateRequest eventJson);
 
-        List<MessageJson> getMessageByEventId(@NotNull Long eventId);
+        List<MessageJson> getMessageByEventId(Long eventId);
 
-        MessageJson getMessageByMessageId(@NotNull Long id);
+        MessageJson getMessageByMessageId(Long id);
     }
 
     interface CreateInteractor extends IBase.Interactor {
-        MessageJson create(@NotNull MessageCreateRequest eventJson);
+        MessageJson create(MessageCreateRequest eventJson);
     }
 
     interface GetByEventIdInteractor extends IBase.Interactor {
-        List<MessageJson> get(@NotNull Long eventId);
+        List<MessageJson> get(Long eventId);
     }
 
     interface GetByIdInteractor extends IBase.Interactor {
-        MessageJson get(@NotNull Long id);
+        MessageJson get(Long id);
     }
 }

@@ -26,6 +26,17 @@ public class EventCreateRequest {
     @XmlElement(name = ATTRIBUTE_DESCRIPTION, required = true)
     private String description;
 
+    private EventCreateRequest(UserShortJson creator,
+                               String title,
+                               String description) {
+        this.creator = creator;
+        this.title = title;
+        this.description = description;
+    }
+
+    public EventCreateRequest() {
+    }
+
     public static EventCreateRequest fromEntity(Event event) {
         UserShortJson creatorJson = null;
         User creator = event.getCreator();
@@ -38,35 +49,24 @@ public class EventCreateRequest {
                 event.getDescription());
     }
 
-    private EventCreateRequest(UserShortJson creator,
-                               String title,
-                               String description) {
-        this.creator = creator;
-        this.title = title;
-        this.description = description;
-    }
-
-    public EventCreateRequest() {
-    }
-
     public UserShortJson getCreator() {
         return creator;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public void setCreator(UserShortJson creator) {
         this.creator = creator;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public void setDescription(String description) {
@@ -116,14 +116,6 @@ public class EventCreateRequest {
         @XmlElement(name = ATTRIBUTE_USERNAME, required = true)
         private String username;
 
-        public static UserShortJson fromEntity(User user) {
-            if (user == null) {
-                return null;
-            } else {
-                return new UserShortJson(user.getId(), user.getUsername());
-            }
-        }
-
         private UserShortJson(Long id, String username) {
             this.id = id;
             this.username = username;
@@ -133,16 +125,24 @@ public class EventCreateRequest {
             this(null, null);
         }
 
+        public static UserShortJson fromEntity(User user) {
+            if (user == null) {
+                return null;
+            } else {
+                return new UserShortJson(user.getId(), user.getUsername());
+            }
+        }
+
         public Long getId() {
             return id;
         }
 
-        public String getUsername() {
-            return username;
-        }
-
         public void setId(Long id) {
             this.id = id;
+        }
+
+        public String getUsername() {
+            return username;
         }
 
         public void setUsername(String username) {

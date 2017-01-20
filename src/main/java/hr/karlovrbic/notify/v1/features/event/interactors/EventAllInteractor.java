@@ -1,9 +1,9 @@
 package hr.karlovrbic.notify.v1.features.event.interactors;
 
+import hr.karlovrbic.notify.v1.dao.manager.JPAEMProvider;
 import hr.karlovrbic.notify.v1.features.event.IEvent;
 import hr.karlovrbic.notify.v1.model.entity.Event;
 import hr.karlovrbic.notify.v1.model.json.EventJson;
-import hr.karlovrbic.notify.v1.dao.manager.JPAEMProvider;
 
 import java.util.List;
 import java.util.stream.Collectors;

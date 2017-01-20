@@ -24,42 +24,43 @@ public class CommentCreateRequest {
     @XmlElement(name = ATTRIBUTE_MESSAGE, required = true)
     private MessageShortJson message;
 
-    public static CommentCreateRequest fromEntity(Comment comment) {
-        return new CommentCreateRequest(comment.getContent(),
-                UserShortJson.fromEntity(comment.getCreator()),
-                MessageShortJson.fromEntity(comment.getMessage()));
-    }
-
     public CommentCreateRequest(String content, UserShortJson creator, MessageShortJson message) {
         this.content = content;
         this.creator = creator;
         this.message = message;
     }
 
-    public CommentCreateRequest(){}
+    public CommentCreateRequest() {
+    }
+
+    public static CommentCreateRequest fromEntity(Comment comment) {
+        return new CommentCreateRequest(comment.getContent(),
+                UserShortJson.fromEntity(comment.getCreator()),
+                MessageShortJson.fromEntity(comment.getMessage()));
+    }
 
     public String getContent() {
         return content;
-    }
-
-    public UserShortJson getCreator() {
-        return creator;
-    }
-
-    public MessageShortJson getMessage() {
-        return message;
     }
 
     public void setContent(String content) {
         this.content = content;
     }
 
-    public void setMessage(MessageShortJson message) {
-        this.message = message;
+    public UserShortJson getCreator() {
+        return creator;
     }
 
     public void setCreator(UserShortJson creator) {
         this.creator = creator;
+    }
+
+    public MessageShortJson getMessage() {
+        return message;
+    }
+
+    public void setMessage(MessageShortJson message) {
+        this.message = message;
     }
 
     @Override
@@ -102,14 +103,6 @@ public class CommentCreateRequest {
         @XmlElement(name = ATTRIBUTE_USERNAME, required = true)
         private String username;
 
-        public static UserShortJson fromEntity(User user) {
-            if (user == null) {
-                return null;
-            } else {
-                return new UserShortJson(user.getId(), user.getUsername());
-            }
-        }
-
         private UserShortJson(Long id, String username) {
             this.id = id;
             this.username = username;
@@ -119,16 +112,24 @@ public class CommentCreateRequest {
             this(null, null);
         }
 
+        public static UserShortJson fromEntity(User user) {
+            if (user == null) {
+                return null;
+            } else {
+                return new UserShortJson(user.getId(), user.getUsername());
+            }
+        }
+
         public Long getId() {
             return id;
         }
 
-        public String getUsername() {
-            return username;
-        }
-
         public void setId(Long id) {
             this.id = id;
+        }
+
+        public String getUsername() {
+            return username;
         }
 
         public void setUsername(String username) {
@@ -176,14 +177,6 @@ public class CommentCreateRequest {
         @XmlElement(name = ATTRIBUTE_USERNAME, required = true)
         private String content;
 
-        public static MessageShortJson fromEntity(Message message) {
-            if (message == null) {
-                return null;
-            } else {
-                return new MessageShortJson(message.getId(), message.getContent());
-            }
-        }
-
         private MessageShortJson(Long id, String content) {
             this.id = id;
             this.content = content;
@@ -192,16 +185,24 @@ public class CommentCreateRequest {
         public MessageShortJson() {
         }
 
+        public static MessageShortJson fromEntity(Message message) {
+            if (message == null) {
+                return null;
+            } else {
+                return new MessageShortJson(message.getId(), message.getContent());
+            }
+        }
+
         public Long getId() {
             return id;
         }
 
-        public String getContent() {
-            return content;
-        }
-
         public void setId(Long id) {
             this.id = id;
+        }
+
+        public String getContent() {
+            return content;
         }
 
         public void setContent(String content) {

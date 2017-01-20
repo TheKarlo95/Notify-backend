@@ -89,10 +89,18 @@ public class Event implements Serializable {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = COLUMN_CREATOR, nullable = false)
     public User getCreator() {
         return creator;
+    }
+
+    public void setCreator(User user) {
+        this.creator = user;
     }
 
     @Column(name = COLUMN_TITLE, length = 50, unique = true, nullable = false)
@@ -100,9 +108,17 @@ public class Event implements Serializable {
         return title;
     }
 
+    public void setTitle(String name) {
+        this.title = name;
+    }
+
     @Column(name = COLUMN_DESCRIPTION, length = 1024, nullable = false)
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Temporal(TemporalType.DATE)
@@ -111,9 +127,17 @@ public class Event implements Serializable {
         return createdAt;
     }
 
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
     @Column(name = COLUMN_PICTURE, length = 50)
     public String getPictureLink() {
         return pictureLink;
+    }
+
+    public void setPictureLink(String pictureLink) {
+        this.pictureLink = pictureLink;
     }
 
     @ManyToMany(mappedBy = "subscribedEvents", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -121,37 +145,13 @@ public class Event implements Serializable {
         return subscribedUsers;
     }
 
+    public void setSubscribedUsers(List<User> subscribedUsers) {
+        this.subscribedUsers = ListUtil.getNonNull(subscribedUsers);
+    }
+
     @OneToMany(mappedBy = Message.COLUMN_EVENT, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public List<Message> getMessages() {
         return messages;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setCreator(User user) {
-        this.creator = user;
-    }
-
-    public void setTitle(String name) {
-        this.title = name;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public void setPictureLink(String pictureLink) {
-        this.pictureLink = pictureLink;
-    }
-
-    public void setSubscribedUsers(List<User> subscribedUsers) {
-        this.subscribedUsers = ListUtil.getNonNull(subscribedUsers);
     }
 
     public void setMessages(List<Message> messages) {

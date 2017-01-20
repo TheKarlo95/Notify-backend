@@ -45,25 +45,6 @@ public class EventJson {
     @XmlElement(name = ATTRIBUTE_MESSAGES, required = true)
     private List<MessageShortJson> messages;
 
-    public static EventJson fromEntity(Event event) {
-        UserShortJson creator = UserShortJson.fromEntity(event.getCreator());
-        List<UserShortJson> subscribers = event.getSubscribedUsers().stream()
-                .map(UserShortJson::fromEntity)
-                .collect(Collectors.toList());
-        List<MessageShortJson> messages = event.getMessages().stream()
-                .map(MessageShortJson::fromEntity)
-                .collect(Collectors.toList());
-
-        return new EventJson(event.getId(),
-                creator,
-                event.getTitle(),
-                event.getDescription(),
-                event.getCreatedAt(),
-                event.getPictureLink(),
-                subscribers,
-                messages);
-    }
-
     private EventJson(Long id,
                       UserShortJson creator,
                       String title,
@@ -85,64 +66,83 @@ public class EventJson {
     public EventJson() {
     }
 
+    public static EventJson fromEntity(Event event) {
+        UserShortJson creator = UserShortJson.fromEntity(event.getCreator());
+        List<UserShortJson> subscribers = event.getSubscribedUsers().stream()
+                .map(UserShortJson::fromEntity)
+                .collect(Collectors.toList());
+        List<MessageShortJson> messages = event.getMessages().stream()
+                .map(MessageShortJson::fromEntity)
+                .collect(Collectors.toList());
+
+        return new EventJson(event.getId(),
+                creator,
+                event.getTitle(),
+                event.getDescription(),
+                event.getCreatedAt(),
+                event.getPictureLink(),
+                subscribers,
+                messages);
+    }
+
     public Long getId() {
         return id;
-    }
-
-    public UserShortJson getCreator() {
-        return creator;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public String getPictureLink() {
-        return pictureLink;
-    }
-
-    public List<UserShortJson> getSubscribers() {
-        return subscribers;
-    }
-
-    public List<MessageShortJson> getMessages() {
-        return messages;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
+    public UserShortJson getCreator() {
+        return creator;
+    }
+
     public void setCreator(UserShortJson creator) {
         this.creator = creator;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
+    public String getPictureLink() {
+        return pictureLink;
+    }
+
     public void setPictureLink(String pictureLink) {
         this.pictureLink = pictureLink;
     }
 
+    public List<UserShortJson> getSubscribers() {
+        return subscribers;
+    }
+
     public void setSubscribers(List<UserShortJson> subscribers) {
         this.subscribers = ListUtil.getNonNull(subscribers);
+    }
+
+    public List<MessageShortJson> getMessages() {
+        return messages;
     }
 
     public void setMessages(List<MessageShortJson> messages) {

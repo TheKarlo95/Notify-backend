@@ -1,6 +1,5 @@
 package hr.karlovrbic.notify.v1.features.comment;
 
-import com.sun.istack.internal.NotNull;
 import hr.karlovrbic.notify.v1.features.comment.requests.CommentCreateRequest;
 import hr.karlovrbic.notify.v1.features.shared.IBase;
 import hr.karlovrbic.notify.v1.model.json.CommentJson;
@@ -16,22 +15,22 @@ public interface IComment {
     }
 
     interface Presenter extends IBase.Presenter {
-        CommentJson createComment(@NotNull CommentCreateRequest eventJson);
+        CommentJson createComment(CommentCreateRequest eventJson);
 
-        List<CommentJson> getCommentByMessageId(@NotNull Long eventId);
+        List<CommentJson> getCommentByMessageId(Long eventId);
 
-        CommentJson getCommentByCommentId(@NotNull Long id);
+        CommentJson getCommentByCommentId(Long id);
     }
 
     interface CreateInteractor extends IBase.Interactor {
-        CommentJson create(@NotNull CommentCreateRequest eventJson);
+        CommentJson create(CommentCreateRequest eventJson);
     }
 
     interface GetByMessageIdInteractor extends IBase.Interactor {
-        List<CommentJson> get(@NotNull Long eventId);
+        List<CommentJson> get(Long eventId);
     }
 
     interface GetByIdInteractor extends IBase.Interactor {
-        CommentJson get(@NotNull Long id);
+        CommentJson get(Long id);
     }
 }

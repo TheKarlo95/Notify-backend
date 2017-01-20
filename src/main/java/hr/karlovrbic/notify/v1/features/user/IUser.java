@@ -5,7 +5,6 @@ import hr.karlovrbic.notify.v1.features.user.requests.UserCreateRequest;
 import hr.karlovrbic.notify.v1.model.json.EventJson;
 import hr.karlovrbic.notify.v1.model.json.UserJson;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -17,19 +16,19 @@ public interface IUser {
     }
 
     interface Presenter extends IBase.Presenter {
-        UserJson createUser(@NotNull UserCreateRequest userJson);
+        UserJson createUser(UserCreateRequest userJson);
 
         List<UserJson> getAllUsers();
 
-        UserJson getUserById(@NotNull Long id);
+        UserJson getUserById(Long id);
 
-        UserJson getUserByUsername(@NotNull String username);
+        UserJson getUserByUsername(String username);
 
-        List<EventJson> getEventByCreatorId(@NotNull Long creatorId);
+        List<EventJson> getEventByCreatorId(Long creatorId);
     }
 
     interface CreateInteractor extends IBase.Interactor {
-        UserJson create(@NotNull UserCreateRequest userCreateRequest);
+        UserJson create(UserCreateRequest userCreateRequest);
     }
 
     interface GetAllInteractor extends IBase.Interactor {
@@ -37,14 +36,14 @@ public interface IUser {
     }
 
     interface GetByIdInteractor extends IBase.Interactor {
-        UserJson get(@NotNull Long id);
+        UserJson get(Long id);
     }
 
     interface GetByUsernameInteractor extends IBase.Interactor {
-        UserJson get(@NotNull String username);
+        UserJson get(String username);
     }
 
     interface GetEventsByCreatorIdInteractor extends IBase.Interactor {
-        List<EventJson> get(@NotNull Long creatorId);
+        List<EventJson> get(Long creatorId);
     }
 }
