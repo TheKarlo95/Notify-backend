@@ -31,6 +31,7 @@ public class UserLoginInteractor implements IUser.LoginInteractor {
             response = UserResponse.fromEntity(user);
         }
 
+        JPAEMProvider.close();
         return response;
     }
 }

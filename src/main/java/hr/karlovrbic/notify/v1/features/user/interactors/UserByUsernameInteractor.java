@@ -29,6 +29,7 @@ public class UserByUsernameInteractor implements IUser.GetByUsernameInteractor {
             response = UserResponse.fromEntity(user);
         }
 
+        JPAEMProvider.close();
         return response;
     }
 }

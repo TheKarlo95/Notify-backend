@@ -19,13 +19,13 @@ public class UserCreateInteractor implements IUser.CreateInteractor {
 
         EntityManager em = JPAEMProvider.getEntityManager();
         em.persist(user);
-        JPAEMProvider.close();
 
         UserResponse response = null;
         if (user != null) {
             response = UserResponse.fromEntity(user);
         }
 
+        JPAEMProvider.close();
         return response;
     }
 }

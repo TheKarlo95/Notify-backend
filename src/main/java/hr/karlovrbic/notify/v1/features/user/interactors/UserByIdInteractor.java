@@ -13,13 +13,13 @@ public class UserByIdInteractor implements IUser.GetByIdInteractor {
     @Override
     public UserResponse get(Long id) {
         User user = JPAEMProvider.getEntityManager().find(User.class, id);
-        JPAEMProvider.close();
 
         UserResponse response = null;
         if (user != null) {
             response = UserResponse.fromEntity(user);
         }
 
+        JPAEMProvider.close();
         return response;
     }
 }

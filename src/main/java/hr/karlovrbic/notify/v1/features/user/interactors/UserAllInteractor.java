@@ -17,7 +17,6 @@ public class UserAllInteractor implements IUser.GetAllInteractor {
     @Override
     public List<UserResponse> getAll() {
         List<User> users = JPAEMProvider.getEntityManager().createNamedQuery("User.selectAll").getResultList();
-        JPAEMProvider.close();
 
         List<UserResponse> userJsons = null;
         if (users != null && !users.isEmpty()) {
@@ -26,6 +25,7 @@ public class UserAllInteractor implements IUser.GetAllInteractor {
                     .collect(Collectors.toList());
         }
 
+        JPAEMProvider.close();
         return userJsons;
     }
 }
