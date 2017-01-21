@@ -3,7 +3,7 @@ package hr.karlovrbic.notify.v1.features.user.interactors;
 import hr.karlovrbic.notify.v1.dao.manager.JPAEMProvider;
 import hr.karlovrbic.notify.v1.features.user.IUser;
 import hr.karlovrbic.notify.v1.model.entity.User;
-import hr.karlovrbic.notify.v1.model.json.UserJson;
+import hr.karlovrbic.notify.v1.model.json.UserResponse;
 
 /**
  * Created by Karlo Vrbic on 04.11.16..
@@ -11,15 +11,15 @@ import hr.karlovrbic.notify.v1.model.json.UserJson;
 public class UserByIdInteractor implements IUser.GetByIdInteractor {
 
     @Override
-    public UserJson get(Long id) {
+    public UserResponse get(Long id) {
         User user = JPAEMProvider.getEntityManager().find(User.class, id);
         JPAEMProvider.close();
 
-        UserJson userJson = null;
+        UserResponse response = null;
         if (user != null) {
-            userJson = user.toJson();
+            response = UserResponse.fromEntity(user);
         }
 
-        return userJson;
+        return response;
     }
 }

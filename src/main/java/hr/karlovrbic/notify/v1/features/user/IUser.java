@@ -5,6 +5,7 @@ import hr.karlovrbic.notify.v1.features.user.requests.UserCreateRequest;
 import hr.karlovrbic.notify.v1.features.user.requests.UserLoginRequest;
 import hr.karlovrbic.notify.v1.model.json.EventJson;
 import hr.karlovrbic.notify.v1.model.json.UserJson;
+import hr.karlovrbic.notify.v1.model.json.UserResponse;
 
 import java.util.List;
 
@@ -31,19 +32,19 @@ public interface IUser {
     }
 
     interface CreateInteractor extends IBase.Interactor {
-        UserJson create(UserCreateRequest userCreateRequest);
+        UserResponse create(UserCreateRequest userCreateRequest);
     }
 
     interface GetAllInteractor extends IBase.Interactor {
-        List<UserJson> getAll();
+        List<UserResponse> getAll();
     }
 
     interface GetByIdInteractor extends IBase.Interactor {
-        UserJson get(Long id);
+        UserResponse get(Long id);
     }
 
     interface GetByUsernameInteractor extends IBase.Interactor {
-        UserJson get(String username);
+        UserResponse get(String username);
     }
 
     interface GetEventsByCreatorIdInteractor extends IBase.Interactor {
