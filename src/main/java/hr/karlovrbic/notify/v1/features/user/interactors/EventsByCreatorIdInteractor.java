@@ -19,7 +19,6 @@ public class EventsByCreatorIdInteractor implements IUser.GetEventsByCreatorIdIn
         List<Event> events = JPAEMProvider.getEntityManager().createNamedQuery("Event.selectByCreatorId")
                 .setParameter("creatorId", creatorId)
                 .getResultList();
-        JPAEMProvider.close();
 
         List<EventJson> eventJsons = null;
 
@@ -29,6 +28,7 @@ public class EventsByCreatorIdInteractor implements IUser.GetEventsByCreatorIdIn
                     .collect(Collectors.toList());
         }
 
+        JPAEMProvider.close();
         return eventJsons;
     }
 }
