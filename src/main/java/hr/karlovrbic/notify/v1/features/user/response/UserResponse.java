@@ -45,7 +45,7 @@ public class UserResponse {
     private Date createdAt;
     @XmlElement(name = ATTRIBUTE_PROFILE_PICTURE)
     private String profilePictureLink;
-    @XmlElement(name = ATTRIBUTE_PROFILE_PICTURE)
+    @XmlElement(name = ATTRIBUTE_EVENTS)
     private List<EventResponse> events;
 
     private UserResponse(Long id,
