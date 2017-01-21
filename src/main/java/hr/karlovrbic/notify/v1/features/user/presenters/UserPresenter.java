@@ -5,7 +5,7 @@ import hr.karlovrbic.notify.v1.features.user.interactors.*;
 import hr.karlovrbic.notify.v1.features.user.requests.UserCreateRequest;
 import hr.karlovrbic.notify.v1.features.user.requests.UserLoginRequest;
 import hr.karlovrbic.notify.v1.model.json.EventJson;
-import hr.karlovrbic.notify.v1.model.json.UserJson;
+import hr.karlovrbic.notify.v1.model.json.UserResponse;
 import hr.karlovrbic.notify.v1.utils.UserChecker;
 import org.apache.commons.validator.routines.EmailValidator;
 
@@ -19,6 +19,7 @@ public final class UserPresenter implements IUser.Presenter {
 
     private IUser.View view;
     private IUser.CreateInteractor createInteractor;
+    private IUser.LoginInteractor loginInteractor;
     private IUser.GetAllInteractor getAllInteractor;
     private IUser.GetByIdInteractor getByIdInteractor;
     private IUser.GetByUsernameInteractor getByUsernameInteractor;
@@ -27,6 +28,7 @@ public final class UserPresenter implements IUser.Presenter {
     public UserPresenter(IUser.View view) {
         this.view = view;
         this.createInteractor = new UserCreateInteractor();
+        this.loginInteractor = new UserLoginInteractor();
         this.getAllInteractor = new UserAllInteractor();
         this.getByIdInteractor = new UserByIdInteractor();
         this.getByUsernameInteractor = new UserByUsernameInteractor();
@@ -34,7 +36,7 @@ public final class UserPresenter implements IUser.Presenter {
     }
 
     @Override
-    public UserJson createUser(UserCreateRequest request) {
+    public UserResponse createUser(UserCreateRequest request) {
         if (isValidRequest(request)) {
             return createInteractor.create(request);
         } else {
@@ -43,20 +45,17 @@ public final class UserPresenter implements IUser.Presenter {
     }
 
     @Override
-    public UserJson loginUser(UserLoginRequest request) {
+    public UserResponse loginUser(UserLoginRequest request) {
         if (isValidLoginRequest(request)) {
-            UserJson userJson = getUserByUsername(request.getUsername());
-
-            if (Objects.equals(request.getPassword(), userJson.getPassword())) {
-                return userJson;
-            }
+            return loginInteractor.login(request);
+        } else {
+            return null;
         }
-        return null;
     }
 
     @Override
-    public List<UserJson> getAllUsers() {
-        List<UserJson> jsons = getAllInteractor.getAll();
+    public List<UserResponse> getAllUsers() {
+        List<UserResponse> jsons = getAllInteractor.getAll();
         if (jsons != null && !jsons.isEmpty()) {
             return jsons;
         } else {
@@ -65,7 +64,7 @@ public final class UserPresenter implements IUser.Presenter {
     }
 
     @Override
-    public UserJson getUserById(Long id) {
+    public UserResponse getUserById(Long id) {
         if (id > 0L) {
             return getByIdInteractor.get(id);
         } else {
@@ -74,7 +73,7 @@ public final class UserPresenter implements IUser.Presenter {
     }
 
     @Override
-    public UserJson getUserByUsername(String username) {
+    public UserResponse getUserByUsername(String username) {
         if (UserChecker.isValidUserName(username)) {
             return getByUsernameInteractor.get(username);
         } else {

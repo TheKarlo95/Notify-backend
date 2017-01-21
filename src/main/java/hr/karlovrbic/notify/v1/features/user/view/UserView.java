@@ -7,7 +7,7 @@ import hr.karlovrbic.notify.v1.features.user.presenters.UserPresenter;
 import hr.karlovrbic.notify.v1.features.user.requests.UserCreateRequest;
 import hr.karlovrbic.notify.v1.features.user.requests.UserLoginRequest;
 import hr.karlovrbic.notify.v1.model.json.EventJson;
-import hr.karlovrbic.notify.v1.model.json.UserJson;
+import hr.karlovrbic.notify.v1.model.json.UserResponse;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -29,12 +29,9 @@ public class UserView implements IUser.View {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response create(UserCreateRequest request) {
-        UserJson json = createPresenter().createUser(request);
+        UserResponse json = createPresenter().createUser(request);
 
         if (json != null) {
-            Response response = Response.ok(json, MediaType.APPLICATION_JSON_TYPE).build();
-            System.out.println("Response: \n");
-            System.out.println(gson.toJson(json));
             return Response.ok(json, MediaType.APPLICATION_JSON_TYPE).status(201).build();
         } else {
             return Response.ok().build();
@@ -43,7 +40,7 @@ public class UserView implements IUser.View {
 
     @GET
     public Response getAll() {
-        List<UserJson> json = createPresenter().getAllUsers();
+        List<UserResponse> json = createPresenter().getAllUsers();
 
         if (json != null && !json.isEmpty()) {
             return Response.ok(json, MediaType.APPLICATION_JSON_TYPE).build();
@@ -56,7 +53,7 @@ public class UserView implements IUser.View {
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/login")
     public Response login(UserLoginRequest request) {
-        UserJson json = createPresenter().loginUser(request);
+        UserResponse json = createPresenter().loginUser(request);
 
         if (json != null) {
             return Response.ok(json, MediaType.APPLICATION_JSON_TYPE).build();
@@ -68,7 +65,7 @@ public class UserView implements IUser.View {
     @GET
     @Path("/{id}")
     public Response getUsersById(@PathParam("id") long id) {
-        UserJson json = createPresenter().getUserById(id);
+        UserResponse json = createPresenter().getUserById(id);
 
         if (json != null) {
             return Response.ok(json, MediaType.APPLICATION_JSON_TYPE).build();
@@ -80,7 +77,7 @@ public class UserView implements IUser.View {
     @GET
     @Path("/name/{username}")
     public Response getUsersById(@PathParam("username") String username) {
-        UserJson json = createPresenter().getUserByUsername(username);
+        UserResponse json = createPresenter().getUserByUsername(username);
 
         if (json != null) {
             return Response.ok(json, MediaType.APPLICATION_JSON_TYPE).build();
