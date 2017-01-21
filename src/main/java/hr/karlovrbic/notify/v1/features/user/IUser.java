@@ -2,6 +2,7 @@ package hr.karlovrbic.notify.v1.features.user;
 
 import hr.karlovrbic.notify.v1.features.shared.IBase;
 import hr.karlovrbic.notify.v1.features.user.requests.UserCreateRequest;
+import hr.karlovrbic.notify.v1.features.user.requests.UserLoginRequest;
 import hr.karlovrbic.notify.v1.model.json.EventJson;
 import hr.karlovrbic.notify.v1.model.json.UserJson;
 
@@ -16,7 +17,9 @@ public interface IUser {
     }
 
     interface Presenter extends IBase.Presenter {
-        UserJson createUser(UserCreateRequest userJson);
+        UserJson createUser(UserCreateRequest request);
+
+        UserJson loginUser(UserLoginRequest request);
 
         List<UserJson> getAllUsers();
 

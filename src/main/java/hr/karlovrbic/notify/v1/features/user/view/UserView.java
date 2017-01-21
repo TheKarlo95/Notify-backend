@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import hr.karlovrbic.notify.v1.features.user.IUser;
 import hr.karlovrbic.notify.v1.features.user.presenters.UserPresenter;
 import hr.karlovrbic.notify.v1.features.user.requests.UserCreateRequest;
+import hr.karlovrbic.notify.v1.features.user.requests.UserLoginRequest;
 import hr.karlovrbic.notify.v1.model.json.EventJson;
 import hr.karlovrbic.notify.v1.model.json.UserJson;
 
@@ -34,7 +35,7 @@ public class UserView implements IUser.View {
             Response response = Response.ok(json, MediaType.APPLICATION_JSON_TYPE).build();
             System.out.println("Response: \n");
             System.out.println(gson.toJson(json));
-            return Response.ok(json, MediaType.APPLICATION_JSON_TYPE).build();
+            return Response.ok(json, MediaType.APPLICATION_JSON_TYPE).status(201).build();
         } else {
             return Response.ok().build();
         }
@@ -45,6 +46,19 @@ public class UserView implements IUser.View {
         List<UserJson> json = createPresenter().getAllUsers();
 
         if (json != null && !json.isEmpty()) {
+            return Response.ok(json, MediaType.APPLICATION_JSON_TYPE).build();
+        } else {
+            return Response.ok().build();
+        }
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/login")
+    public Response login(UserLoginRequest request) {
+        UserJson json = createPresenter().loginUser(request);
+
+        if (json != null) {
             return Response.ok(json, MediaType.APPLICATION_JSON_TYPE).build();
         } else {
             return Response.ok().build();

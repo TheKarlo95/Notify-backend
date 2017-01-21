@@ -3,6 +3,7 @@ package hr.karlovrbic.notify.v1.features.user.presenters;
 import hr.karlovrbic.notify.v1.features.user.IUser;
 import hr.karlovrbic.notify.v1.features.user.interactors.*;
 import hr.karlovrbic.notify.v1.features.user.requests.UserCreateRequest;
+import hr.karlovrbic.notify.v1.features.user.requests.UserLoginRequest;
 import hr.karlovrbic.notify.v1.model.json.EventJson;
 import hr.karlovrbic.notify.v1.model.json.UserJson;
 import hr.karlovrbic.notify.v1.utils.UserChecker;
@@ -32,15 +33,6 @@ public final class UserPresenter implements IUser.Presenter {
         this.getEventsByCreatorIdInteractor = new EventsByCreatorIdInteractor();
     }
 
-    private static boolean isValidRequest(UserCreateRequest request) {
-        return UserChecker.isValidUserName(request.getUsername())
-                && Objects.equals(request.getPassword(), request.getPasswordConfirmation())
-                && UserChecker.isValidPassword(request.getPassword())
-                && EmailValidator.getInstance().isValid(request.getEmail())
-                && UserChecker.isValidName(request.getName())
-                && UserChecker.isValidSurname(request.getSurname());
-    }
-
     @Override
     public UserJson createUser(UserCreateRequest request) {
         if (isValidRequest(request)) {
@@ -48,6 +40,18 @@ public final class UserPresenter implements IUser.Presenter {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public UserJson loginUser(UserLoginRequest request) {
+        if (isValidLoginRequest(request)) {
+            UserJson userJson = getUserByUsername(request.getUsername());
+
+            if (Objects.equals(request.getPassword(), userJson.getPassword())) {
+                return userJson;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -85,5 +89,19 @@ public final class UserPresenter implements IUser.Presenter {
         } else {
             return null;
         }
+    }
+
+    private static boolean isValidRequest(UserCreateRequest request) {
+        return UserChecker.isValidUserName(request.getUsername())
+                && Objects.equals(request.getPassword(), request.getPasswordConfirmation())
+                && UserChecker.isValidPassword(request.getPassword())
+                && EmailValidator.getInstance().isValid(request.getEmail())
+                && UserChecker.isValidName(request.getName())
+                && UserChecker.isValidSurname(request.getSurname());
+    }
+
+    private boolean isValidLoginRequest(UserLoginRequest request) {
+        return UserChecker.isValidUserName(request.getUsername())
+                && UserChecker.isValidPassword(request.getPassword());
     }
 }
