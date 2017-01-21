@@ -1,5 +1,7 @@
 package hr.karlovrbic.notify.v1.features.user.view;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import hr.karlovrbic.notify.v1.features.user.IUser;
 import hr.karlovrbic.notify.v1.features.user.presenters.UserPresenter;
 import hr.karlovrbic.notify.v1.features.user.requests.UserCreateRequest;
@@ -18,6 +20,9 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class UserView implements IUser.View {
 
+    private Gson gson = new GsonBuilder()
+            .setPrettyPrinting()
+            .create();
     private IUser.Presenter presenter;
 
     @POST
@@ -26,6 +31,9 @@ public class UserView implements IUser.View {
         UserJson json = createPresenter().createUser(request);
 
         if (json != null) {
+            Response response = Response.ok(json, MediaType.APPLICATION_JSON_TYPE).build();
+            System.out.println("Response: \n");
+            System.out.println(gson.toJson(json));
             return Response.ok(json, MediaType.APPLICATION_JSON_TYPE).build();
         } else {
             return Response.ok().build();
