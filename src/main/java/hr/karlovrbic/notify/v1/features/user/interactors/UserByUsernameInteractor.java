@@ -32,7 +32,7 @@ public class UserByUsernameInteractor implements IUser.GetByUsernameInteractor {
             UserResponse body = UserResponse.fromEntity(user);
             response = Response.ok(body, MediaType.APPLICATION_JSON_TYPE).build();
         } else {
-            response = Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            response = Response.noContent().build();
         }
 
         JPAEMProvider.close();

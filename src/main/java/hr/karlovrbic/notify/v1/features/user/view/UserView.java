@@ -1,18 +1,13 @@
 package hr.karlovrbic.notify.v1.features.user.view;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import hr.karlovrbic.notify.v1.features.event.response.EventResponse;
 import hr.karlovrbic.notify.v1.features.user.IUser;
 import hr.karlovrbic.notify.v1.features.user.presenters.UserPresenter;
 import hr.karlovrbic.notify.v1.features.user.requests.UserCreateRequest;
 import hr.karlovrbic.notify.v1.features.user.requests.UserLoginRequest;
-import hr.karlovrbic.notify.v1.model.json.UserResponse;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 /**
  * Created by Karlo Vrbic on 07.01.17..
@@ -21,105 +16,54 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class UserView implements IUser.View {
 
-    private Gson gson = new GsonBuilder()
-            .setPrettyPrinting()
-            .create();
     private IUser.Presenter presenter;
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response create(UserCreateRequest request) {
-        UserResponse json = createPresenter().createUser(request);
-
-        if (json != null) {
-            return Response.ok(json, MediaType.APPLICATION_JSON_TYPE).status(201).build();
-        } else {
-            return Response.ok().build();
-        }
+        return createPresenter().createUser(request);
     }
 
     @GET
     public Response getAll() {
-        List<UserResponse> json = createPresenter().getAllUsers();
-
-        if (json != null && !json.isEmpty()) {
-            return Response.ok(json, MediaType.APPLICATION_JSON_TYPE).build();
-        } else {
-            return Response.ok().build();
-        }
+        return createPresenter().getAllUsers();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/login")
     public Response login(UserLoginRequest request) {
-        UserResponse json = createPresenter().loginUser(request);
-
-        if (json != null) {
-            return Response.ok(json, MediaType.APPLICATION_JSON_TYPE).build();
-        } else {
-            return Response.ok().build();
-        }
+        return createPresenter().loginUser(request);
     }
 
     @GET
     @Path("/{id}")
     public Response getUsersById(@PathParam("id") long id) {
-        UserResponse json = createPresenter().getUserById(id);
-
-        if (json != null) {
-            return Response.ok(json, MediaType.APPLICATION_JSON_TYPE).build();
-        } else {
-            return Response.ok().build();
-        }
+        return createPresenter().getUserById(id);
     }
 
     @GET
     @Path("/name/{username}")
     public Response getUsersById(@PathParam("username") String username) {
-        UserResponse json = createPresenter().getUserByUsername(username);
-
-        if (json != null) {
-            return Response.ok(json, MediaType.APPLICATION_JSON_TYPE).build();
-        } else {
-            return Response.ok().build();
-        }
+        return createPresenter().getUserByUsername(username);
     }
 
     @GET
     @Path("/{id}/events")
     public Response getEventsByCreatorId(@PathParam("id") long creatorId) {
-        List<EventResponse> json = createPresenter().getEventByCreatorId(creatorId);
-
-        if (json != null) {
-            return Response.ok(json, MediaType.APPLICATION_JSON_TYPE).build();
-        } else {
-            return Response.ok().build();
-        }
+        return createPresenter().getEventByCreatorId(creatorId);
     }
 
     @GET
     @Path("/{id}/followed")
     public Response getEventsByFollowerId(@PathParam("id") long followerId) {
-        List<EventResponse> json = createPresenter().getEventByCreatorId(followerId);
-
-        if (json != null) {
-            return Response.ok(json, MediaType.APPLICATION_JSON_TYPE).build();
-        } else {
-            return Response.ok().build();
-        }
+        return createPresenter().getEventByCreatorId(followerId);
     }
 
     @PUT
     @Path("/{id}/followed/{eventId}")
     public Response followEvent(@PathParam("id") long followerId) {
-        List<EventResponse> json = createPresenter().getEventByCreatorId(followerId);
-
-        if (json != null) {
-            return Response.ok(json, MediaType.APPLICATION_JSON_TYPE).build();
-        } else {
-            return Response.ok().build();
-        }
+        return createPresenter().getEventByCreatorId(followerId);
     }
 
     private IUser.Presenter createPresenter() {

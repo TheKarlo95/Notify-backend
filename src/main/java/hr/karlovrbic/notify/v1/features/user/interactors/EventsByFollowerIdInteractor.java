@@ -5,6 +5,8 @@ import hr.karlovrbic.notify.v1.features.event.response.EventResponse;
 import hr.karlovrbic.notify.v1.features.user.IUser;
 import hr.karlovrbic.notify.v1.model.entity.Event;
 
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,20 +17,23 @@ public class EventsByFollowerIdInteractor implements IUser.GetEventsByCreatorIdI
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<EventResponse> get(Long creatorId) {
+    public Response get(Long creatorId) {
         List<Event> events = JPAEMProvider.getEntityManager().createNamedQuery("Event.selectByFollowerId")
                 .setParameter("followerId", creatorId)
                 .getResultList();
 
-        List<EventResponse> responses = null;
-
+        Response response = null;
         if (events != null && !events.isEmpty()) {
-            responses = events.stream()
+            List<EventResponse> body = events.stream()
                     .map(EventResponse::fromEntity)
                     .collect(Collectors.toList());
+
+            response = Response.ok(body, MediaType.APPLICATION_JSON_TYPE).build();
+        } else {
+            response = Response.noContent().build();
         }
 
         JPAEMProvider.close();
-        return responses;
+        return response;
     }
 }

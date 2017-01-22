@@ -30,7 +30,7 @@ public class EventAllInteractor implements IEvent.GetAllInteractor {
 
             response = Response.ok(body, MediaType.APPLICATION_JSON_TYPE).build();
         } else {
-            response = Response.status(Response.Status.NO_CONTENT).build();
+            response = Response.noContent().build();
         }
 
         JPAEMProvider.close();

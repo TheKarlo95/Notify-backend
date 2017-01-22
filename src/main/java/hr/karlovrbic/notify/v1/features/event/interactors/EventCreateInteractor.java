@@ -28,7 +28,7 @@ public class EventCreateInteractor implements IEvent.CreateInteractor {
             EventResponse body = EventResponse.fromEntity(event);
             response = Response.ok(body, MediaType.APPLICATION_JSON_TYPE).status(Response.Status.CREATED).build();
         } else {
-            response = Response.status(Response.Status.NO_CONTENT).build();
+            response = Response.noContent().build();
         }
 
         JPAEMProvider.close();

@@ -26,7 +26,7 @@ public class UserLoginInteractor implements IUser.LoginInteractor {
 
         Response response = null;
         if (users == null || users.isEmpty()) {
-            response = Response.status(Response.Status.NO_CONTENT).build();
+            response = Response.status(Response.Status.BAD_REQUEST).build();
         } else if (users.size() == 1) {
             User user = users.get(0);
 

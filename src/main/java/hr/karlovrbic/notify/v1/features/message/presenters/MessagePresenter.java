@@ -7,7 +7,6 @@ import hr.karlovrbic.notify.v1.features.message.interactors.MessageByEventIdInte
 import hr.karlovrbic.notify.v1.features.message.interactors.MessageByIdInteractor;
 import hr.karlovrbic.notify.v1.features.message.interactors.MessageCreateInteractor;
 import hr.karlovrbic.notify.v1.features.message.requests.MessageCreateRequest;
-import hr.karlovrbic.notify.v1.model.json.EventJson;
 import hr.karlovrbic.notify.v1.model.json.MessageJson;
 
 import java.util.List;
@@ -66,10 +65,6 @@ public class MessagePresenter implements IMessage.Presenter {
     private boolean isValidRequest(MessageCreateRequest request) {
         Long commentCreatorId = request.getCreator().getId();
 
-        EventJson event = getEventByIdInteractor.get(request.getEvent().getId());
-        Long eventCreatorId = event.getCreator().getId();
-
-        return commentCreatorId.equals(eventCreatorId)
-                && request.getContent() != null && !request.getContent().isEmpty();
+        return commentCreatorId > 0L && request.getContent() != null && !request.getContent().isEmpty();
     }
 }
