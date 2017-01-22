@@ -73,7 +73,7 @@ public class Event implements Serializable {
                  String pictureLink,
                  List<User> subscribedUsers,
                  List<Message> messages) {
-        this(null, creator, title, null, description, createdAt, pictureLink, subscribedUsers, messages);
+        this(null, creator, title, date, description, createdAt, pictureLink, subscribedUsers, messages);
     }
 
     public Event(User creator,
@@ -83,7 +83,7 @@ public class Event implements Serializable {
                  String pictureLink,
                  List<User> subscribedUsers,
                  List<Message> messages) {
-        this(null, creator, title, null, description, new Date(), pictureLink, subscribedUsers, messages);
+        this(null, creator, title, date, description, new Date(), pictureLink, subscribedUsers, messages);
     }
 
     public Event() {
