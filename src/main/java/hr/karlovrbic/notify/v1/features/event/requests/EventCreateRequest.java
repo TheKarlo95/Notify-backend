@@ -71,6 +71,14 @@ public class EventCreateRequest {
         this.title = title;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public String getDescription() {
         return description;
     }

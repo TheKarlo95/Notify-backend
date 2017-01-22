@@ -40,6 +40,7 @@ public class EventCreateInteractor implements IEvent.CreateInteractor {
 
         return new Event(creator,
                 request.getTitle(),
+                request.getDate(),
                 request.getDescription(),
                 null,
                 null,
