@@ -1,9 +1,9 @@
 package hr.karlovrbic.notify.v1.features.user.interactors;
 
 import hr.karlovrbic.notify.v1.dao.manager.JPAEMProvider;
+import hr.karlovrbic.notify.v1.features.event.response.EventResponse;
 import hr.karlovrbic.notify.v1.features.user.IUser;
 import hr.karlovrbic.notify.v1.model.entity.Event;
-import hr.karlovrbic.notify.v1.model.json.EventJson;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,20 +15,20 @@ public class EventsByFollowerIdInteractor implements IUser.GetEventsByCreatorIdI
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<EventJson> get(Long creatorId) {
+    public List<EventResponse> get(Long creatorId) {
         List<Event> events = JPAEMProvider.getEntityManager().createNamedQuery("Event.selectByFollowerId")
                 .setParameter("followerId", creatorId)
                 .getResultList();
 
-        List<EventJson> eventJsons = null;
+        List<EventResponse> responses = null;
 
         if (events != null && !events.isEmpty()) {
-            eventJsons = events.stream()
-                    .map(Event::toJson)
+            responses = events.stream()
+                    .map(EventResponse::fromEntity)
                     .collect(Collectors.toList());
         }
 
         JPAEMProvider.close();
-        return eventJsons;
+        return responses;
     }
 }
