@@ -1,5 +1,6 @@
 package hr.karlovrbic.notify.v1.features.event.response;
 
+import hr.karlovrbic.notify.v1.formatter.DateAdapter;
 import hr.karlovrbic.notify.v1.model.entity.Event;
 import hr.karlovrbic.notify.v1.model.json.shortened.MessageShortJson;
 import hr.karlovrbic.notify.v1.model.json.shortened.UserShortJson;
@@ -7,6 +8,7 @@ import hr.karlovrbic.notify.v1.utils.ListUtil;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,6 +37,7 @@ public class EventResponse {
     @XmlElement(name = ATTRIBUTE_DESCRIPTION, required = true)
     private String description;
     @XmlElement(name = ATTRIBUTE_CREATED_AT, required = true)
+    @XmlJavaTypeAdapter(DateAdapter.class)
     private Date createdAt;
     @XmlElement(name = ATTRIBUTE_PICTURE)
     private String pictureLink;
