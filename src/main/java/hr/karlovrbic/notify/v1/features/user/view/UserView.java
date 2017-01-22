@@ -4,6 +4,7 @@ import hr.karlovrbic.notify.v1.features.user.IUser;
 import hr.karlovrbic.notify.v1.features.user.presenters.UserPresenter;
 import hr.karlovrbic.notify.v1.features.user.requests.UserCreateRequest;
 import hr.karlovrbic.notify.v1.features.user.requests.UserLoginRequest;
+import hr.karlovrbic.notify.v1.http.PATCH;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -60,7 +61,7 @@ public class UserView implements IUser.View {
         return createPresenter().getEventByCreatorId(followerId);
     }
 
-    @PUT
+    @PATCH
     @Path("/{id}/followed/{eventId}")
     public Response followEvent(@PathParam("id") long followerId) {
         return createPresenter().getEventByCreatorId(followerId);
