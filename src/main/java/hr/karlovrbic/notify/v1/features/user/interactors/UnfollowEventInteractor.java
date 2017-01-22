@@ -26,6 +26,10 @@ public class UnfollowEventInteractor implements IUser.UnfollowEventInteractor {
             Response.status(Response.Status.BAD_REQUEST).build();
         } else {
             user.getSubscribedEvents().remove(event);
+            event.getSubscribedUsers().remove(user);
+
+            em.merge(user);
+            em.merge(event);
 
             EventResponse body = EventResponse.fromEntity(event);
             response = Response.ok(body, MediaType.APPLICATION_JSON_TYPE).build();

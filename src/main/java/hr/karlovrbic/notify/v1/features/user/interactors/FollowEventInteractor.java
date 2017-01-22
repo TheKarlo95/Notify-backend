@@ -28,6 +28,10 @@ public class FollowEventInteractor implements IUser.FollowEventInteractor {
         } else {
             if (!exists(user.getSubscribedEvents(), event)) {
                 user.getSubscribedEvents().add(event);
+                event.getSubscribedUsers().add(user);
+
+                em.merge(user);
+                em.merge(event);
             }
 
             EventResponse body = EventResponse.fromEntity(event);
