@@ -7,6 +7,8 @@ import hr.karlovrbic.notify.v1.model.entity.User;
 import hr.karlovrbic.notify.v1.model.json.UserResponse;
 
 import javax.persistence.EntityManager;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * Created by Karlo Vrbic on 03.11.16..
@@ -14,15 +16,18 @@ import javax.persistence.EntityManager;
 public class UserCreateInteractor implements IUser.CreateInteractor {
 
     @Override
-    public UserResponse create(UserCreateRequest userCreateRequest) {
+    public Response create(UserCreateRequest userCreateRequest) {
         User user = userCreateRequest.toEntity();
 
         EntityManager em = JPAEMProvider.getEntityManager();
         em.persist(user);
 
-        UserResponse response = null;
+        Response response = null;
         if (user != null) {
-            response = UserResponse.fromEntity(user);
+            UserResponse body = UserResponse.fromEntity(user);
+            response = Response.ok(body, MediaType.APPLICATION_JSON_TYPE).status(Response.Status.CREATED).build();
+        } else {
+            response = Response.status(Response.Status.NO_CONTENT).build();
         }
 
         JPAEMProvider.close();

@@ -1,12 +1,10 @@
 package hr.karlovrbic.notify.v1.features.user;
 
-import hr.karlovrbic.notify.v1.features.event.response.EventResponse;
 import hr.karlovrbic.notify.v1.features.shared.IBase;
 import hr.karlovrbic.notify.v1.features.user.requests.UserCreateRequest;
 import hr.karlovrbic.notify.v1.features.user.requests.UserLoginRequest;
-import hr.karlovrbic.notify.v1.model.json.UserResponse;
 
-import java.util.List;
+import javax.ws.rs.core.Response;
 
 /**
  * Created by Karlo Vrbic on 04.11.16..
@@ -17,52 +15,52 @@ public interface IUser {
     }
 
     interface Presenter extends IBase.Presenter {
-        UserResponse createUser(UserCreateRequest request);
+        Response createUser(UserCreateRequest request);
 
-        UserResponse loginUser(UserLoginRequest request);
+        Response loginUser(UserLoginRequest request);
 
-        List<UserResponse> getAllUsers();
+        Response getAllUsers();
 
-        UserResponse getUserById(Long id);
+        Response getUserById(Long id);
 
-        UserResponse getUserByUsername(String username);
+        Response getUserByUsername(String username);
 
-        List<EventResponse> getEventByCreatorId(Long creatorId);
+        Response getEventByCreatorId(Long creatorId);
 
-        List<EventResponse> getEventByFollowerId(Long followerId);
+        Response getEventByFollowerId(Long followerId);
 
-        UserResponse followEvent(Long userId, Long eventId);
+        Response followEvent(Long userId, Long eventId);
     }
 
     interface CreateInteractor extends IBase.Interactor {
-        UserResponse create(UserCreateRequest userCreateRequest);
+        Response create(UserCreateRequest userCreateRequest);
     }
 
     interface LoginInteractor extends IBase.Interactor {
-        UserResponse login(UserLoginRequest userLoginRequest);
+        Response login(UserLoginRequest userLoginRequest);
     }
 
     interface GetAllInteractor extends IBase.Interactor {
-        List<UserResponse> getAll();
+        Response getAll();
     }
 
     interface GetByIdInteractor extends IBase.Interactor {
-        UserResponse get(Long id);
+        Response get(Long id);
     }
 
     interface GetByUsernameInteractor extends IBase.Interactor {
-        UserResponse get(String username);
+        Response get(String username);
     }
 
     interface GetEventsByCreatorIdInteractor extends IBase.Interactor {
-        List<EventResponse> get(Long creatorId);
+        Response get(Long creatorId);
     }
 
     interface GetEventsByFollowerIdInteractor extends IBase.Interactor {
-        List<EventResponse> get(Long followerId);
+        Response get(Long followerId);
     }
 
     interface FollowEventInteractor extends IBase.Interactor {
-        UserResponse get(Long userId, Long eventId);
+        Response get(Long userId, Long eventId);
     }
 }

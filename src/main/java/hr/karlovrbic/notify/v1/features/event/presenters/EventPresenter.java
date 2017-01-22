@@ -5,9 +5,8 @@ import hr.karlovrbic.notify.v1.features.event.interactors.EventAllInteractor;
 import hr.karlovrbic.notify.v1.features.event.interactors.EventByIdInteractor;
 import hr.karlovrbic.notify.v1.features.event.interactors.EventCreateInteractor;
 import hr.karlovrbic.notify.v1.features.event.requests.EventCreateRequest;
-import hr.karlovrbic.notify.v1.model.json.EventJson;
 
-import java.util.List;
+import javax.ws.rs.core.Response;
 
 /**
  * Created by Karlo Vrbic on 12.01.17..
@@ -26,39 +25,34 @@ public class EventPresenter implements IEvent.Presenter {
         this.getByIdInteractor = new EventByIdInteractor();
     }
 
+    @Override
+    public Response createEvent(EventCreateRequest request) {
+        if (isValidRequest(request)) {
+            return createInteractor.create(request);
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
+    @Override
+    public Response getAllEvents() {
+        return getAllInteractor.getAll();
+    }
+
+    @Override
+    public Response getEventById(Long id) {
+        if (id > 0L) {
+            return getByIdInteractor.get(id);
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
     private static boolean isValidRequest(EventCreateRequest request) {
         String title = request.getTitle();
         String description = request.getDescription();
 
         return title != null && title.length() >= 3
                 && description != null && description.length() >= 10 && description.length() <= 180;
-    }
-
-    @Override
-    public EventJson createEvent(EventCreateRequest request) {
-        if (isValidRequest(request)) {
-            return createInteractor.create(request);
-        } else {
-            return null;
-        }
-    }
-
-    @Override
-    public List<EventJson> getAllEvents() {
-        List<EventJson> jsons = getAllInteractor.getAll();
-        if (jsons != null && !jsons.isEmpty()) {
-            return jsons;
-        } else {
-            return null;
-        }
-    }
-
-    @Override
-    public EventJson getEventById(Long id) {
-        if (id > 0L) {
-            return getByIdInteractor.get(id);
-        } else {
-            return null;
-        }
     }
 }

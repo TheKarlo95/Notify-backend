@@ -2,9 +2,8 @@ package hr.karlovrbic.notify.v1.features.event;
 
 import hr.karlovrbic.notify.v1.features.event.requests.EventCreateRequest;
 import hr.karlovrbic.notify.v1.features.shared.IBase;
-import hr.karlovrbic.notify.v1.model.json.EventJson;
 
-import java.util.List;
+import javax.ws.rs.core.Response;
 
 /**
  * Created by Karlo Vrbic on 04.11.16..
@@ -15,22 +14,22 @@ public interface IEvent {
     }
 
     interface Presenter extends IBase.Presenter {
-        EventJson createEvent(EventCreateRequest request);
+        Response createEvent(EventCreateRequest request);
 
-        List<EventJson> getAllEvents();
+        Response getAllEvents();
 
-        EventJson getEventById(Long id);
+        Response getEventById(Long id);
     }
 
     interface CreateInteractor extends IBase.Interactor {
-        EventJson create(EventCreateRequest request);
+        Response create(EventCreateRequest request);
     }
 
     interface GetAllInteractor extends IBase.Interactor {
-        List<EventJson> getAll();
+        Response getAll();
     }
 
     interface GetByIdInteractor extends IBase.Interactor {
-        EventJson get(Long id);
+        Response get(Long id);
     }
 }
