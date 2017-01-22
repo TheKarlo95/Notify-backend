@@ -7,9 +7,8 @@ import hr.karlovrbic.notify.v1.features.message.interactors.MessageByEventIdInte
 import hr.karlovrbic.notify.v1.features.message.interactors.MessageByIdInteractor;
 import hr.karlovrbic.notify.v1.features.message.interactors.MessageCreateInteractor;
 import hr.karlovrbic.notify.v1.features.message.requests.MessageCreateRequest;
-import hr.karlovrbic.notify.v1.model.json.MessageJson;
 
-import java.util.List;
+import javax.ws.rs.core.Response;
 
 /**
  * Created by Karlo Vrbic on 12.01.17..
@@ -31,40 +30,33 @@ public class MessagePresenter implements IMessage.Presenter {
     }
 
     @Override
-    public MessageJson createMessage(MessageCreateRequest request) {
+    public Response createMessage(MessageCreateRequest request, Long eventId) {
         if (isValidRequest(request)) {
-            return createInteractor.create(request);
+            return createInteractor.create(request, eventId);
         } else {
-            return null;
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
 
     @Override
-    public List<MessageJson> getMessageByEventId(Long eventId) {
-        List<MessageJson> jsons = null;
-
+    public Response getMessageByEventId(Long eventId) {
         if (eventId > 0L) {
-            jsons = getByEventIdInteractor.get(eventId);
-            if (jsons != null && !jsons.isEmpty()) {
-                return jsons;
-            }
+            return getByEventIdInteractor.get(eventId);
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
-
-        return jsons;
     }
 
     @Override
-    public MessageJson getMessageByMessageId(Long id) {
+    public Response getMessageByMessageId(Long id) {
         if (id > 0L) {
             return getByIdInteractor.get(id);
         } else {
-            return null;
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
 
     private boolean isValidRequest(MessageCreateRequest request) {
-        Long commentCreatorId = request.getCreator().getId();
-
-        return commentCreatorId > 0L && request.getContent() != null && !request.getContent().isEmpty();
+        return request.getContent() != null && !request.getContent().isEmpty();
     }
 }

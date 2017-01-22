@@ -2,9 +2,11 @@ package hr.karlovrbic.notify.v1.features.event.response;
 
 import hr.karlovrbic.notify.v1.formatter.DateAdapter;
 import hr.karlovrbic.notify.v1.model.entity.Event;
-import hr.karlovrbic.notify.v1.model.json.shortened.MessageShortJson;
-import hr.karlovrbic.notify.v1.model.json.shortened.UserShortJson;
+import hr.karlovrbic.notify.v1.model.entity.Message;
+import hr.karlovrbic.notify.v1.model.entity.User;
 import hr.karlovrbic.notify.v1.utils.ListUtil;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,7 +34,7 @@ public class EventResponse {
     @XmlElement(name = ATTRIBUTE_ID)
     private Long id;
     @XmlElement(name = ATTRIBUTE_CREATOR, required = true)
-    private UserShortJson creator;
+    private UserShortResponse creator;
     @XmlElement(name = ATTRIBUTE_TITLE, required = true)
     private String title;
     @XmlElement(name = ATTRIBUTE_DATE, required = true)
@@ -46,19 +48,19 @@ public class EventResponse {
     @XmlElement(name = ATTRIBUTE_PICTURE)
     private String pictureLink;
     @XmlElement(name = ATTRIBUTE_SUBSCRIBERS, required = true)
-    private List<UserShortJson> subscribers;
+    private List<UserShortResponse> subscribers;
     @XmlElement(name = ATTRIBUTE_MESSAGES, required = true)
-    private List<MessageShortJson> messages;
+    private List<MessageShortResponse> messages;
 
     public EventResponse(Long id,
-                         UserShortJson creator,
+                         UserShortResponse creator,
                          String title,
                          Date date,
                          String description,
                          Date createdAt,
                          String pictureLink,
-                         List<UserShortJson> subscribers,
-                         List<MessageShortJson> messages) {
+                         List<UserShortResponse> subscribers,
+                         List<MessageShortResponse> messages) {
         this.id = id;
         this.creator = creator;
         this.title = title;
@@ -74,12 +76,12 @@ public class EventResponse {
     }
 
     public static EventResponse fromEntity(Event event) {
-        UserShortJson creator = UserShortJson.fromEntity(event.getCreator());
-        List<UserShortJson> subscribers = event.getSubscribedUsers().stream()
-                .map(UserShortJson::fromEntity)
+        UserShortResponse creator = UserShortResponse.fromEntity(event.getCreator());
+        List<UserShortResponse> subscribers = event.getSubscribedUsers().stream()
+                .map(UserShortResponse::fromEntity)
                 .collect(Collectors.toList());
-        List<MessageShortJson> messages = event.getMessages().stream()
-                .map(MessageShortJson::fromEntity)
+        List<MessageShortResponse> messages = event.getMessages().stream()
+                .map(MessageShortResponse::fromEntity)
                 .collect(Collectors.toList());
 
         return new EventResponse(event.getId(),
@@ -101,11 +103,11 @@ public class EventResponse {
         this.id = id;
     }
 
-    public UserShortJson getCreator() {
+    public UserShortResponse getCreator() {
         return creator;
     }
 
-    public void setCreator(UserShortJson creator) {
+    public void setCreator(UserShortResponse creator) {
         this.creator = creator;
     }
 
@@ -149,19 +151,19 @@ public class EventResponse {
         this.pictureLink = pictureLink;
     }
 
-    public List<UserShortJson> getSubscribers() {
+    public List<UserShortResponse> getSubscribers() {
         return subscribers;
     }
 
-    public void setSubscribers(List<UserShortJson> subscribers) {
+    public void setSubscribers(List<UserShortResponse> subscribers) {
         this.subscribers = ListUtil.getNonNull(subscribers);
     }
 
-    public List<MessageShortJson> getMessages() {
+    public List<MessageShortResponse> getMessages() {
         return messages;
     }
 
-    public void setMessages(List<MessageShortJson> messages) {
+    public void setMessages(List<MessageShortResponse> messages) {
         this.messages = ListUtil.getNonNull(messages);
     }
 
@@ -197,5 +199,151 @@ public class EventResponse {
                 ", subscribers=" + subscribers +
                 ", messages=" + messages +
                 '}';
+    }
+
+    public static class UserShortResponse {
+
+        static final String ATTRIBUTE_ID = "id";
+        static final String ATTRIBUTE_USERNAME = "username";
+
+        @XmlElement(name = ATTRIBUTE_ID, required = true)
+        private Long id;
+        @XmlElement(name = ATTRIBUTE_USERNAME, required = true)
+        private String username;
+
+        private UserShortResponse(Long id, String username) {
+            this.id = id;
+            this.username = username;
+        }
+
+        public UserShortResponse() {
+        }
+
+        public static UserShortResponse fromEntity(User user) {
+            if (user == null) {
+                return null;
+            } else {
+                return new UserShortResponse(user.getId(), user.getUsername());
+            }
+        }
+
+        public Long getId() {
+            return id;
+        }
+
+        public void setId(Long id) {
+            this.id = id;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+
+            if (o == null || getClass() != o.getClass()) return false;
+
+            UserShortResponse that = (UserShortResponse) o;
+
+            return new EqualsBuilder()
+                    .append(id, that.id)
+                    .append(username, that.username)
+                    .isEquals();
+        }
+
+        @Override
+        public int hashCode() {
+            return new HashCodeBuilder(17, 37)
+                    .append(id)
+                    .append(username)
+                    .toHashCode();
+        }
+
+        @Override
+        public String toString() {
+            return "UserShortResponse{" +
+                    "id=" + id +
+                    ", username='" + username + '\'' +
+                    '}';
+        }
+    }
+
+    public static class MessageShortResponse {
+
+        static final String ATTRIBUTE_ID = "id";
+        static final String ATTRIBUTE_USERNAME = "content";
+
+        @XmlElement(name = ATTRIBUTE_ID, required = true)
+        private Long id;
+        @XmlElement(name = ATTRIBUTE_USERNAME, required = true)
+        private String content;
+
+        private MessageShortResponse(Long id, String content) {
+            this.id = id;
+            this.content = content;
+        }
+
+        public MessageShortResponse() {
+        }
+
+        public static MessageShortResponse fromEntity(Message message) {
+            if (message == null) {
+                return null;
+            } else {
+                return new MessageShortResponse(message.getId(), message.getContent());
+            }
+        }
+
+        public Long getId() {
+            return id;
+        }
+
+        public void setId(Long id) {
+            this.id = id;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+
+            if (o == null || getClass() != o.getClass()) return false;
+
+            MessageShortResponse that = (MessageShortResponse) o;
+
+            return new EqualsBuilder()
+                    .append(id, that.id)
+                    .append(content, that.content)
+                    .isEquals();
+        }
+
+        @Override
+        public int hashCode() {
+            return new HashCodeBuilder(17, 37)
+                    .append(id)
+                    .append(content)
+                    .toHashCode();
+        }
+
+        @Override
+        public String toString() {
+            return "MessageShortResponse{" +
+                    "id=" + id +
+                    ", content='" + content + '\'' +
+                    '}';
+        }
     }
 }

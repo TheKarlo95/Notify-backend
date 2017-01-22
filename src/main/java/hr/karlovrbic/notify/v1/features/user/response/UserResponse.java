@@ -211,7 +211,7 @@ public class UserResponse {
 
         @Override
         public String toString() {
-            return "Event{" +
+            return "EventShortResponse{" +
                     "id=" + id +
                     ", title='" + title + '\'' +
                     '}';

@@ -160,7 +160,7 @@ public class CommentCreateRequest {
 
         @Override
         public String toString() {
-            return "UserShortJson{" +
+            return "UserShortResponse{" +
                     "id=" + id +
                     ", username='" + username + '\'' +
                     '}';
@@ -233,7 +233,7 @@ public class CommentCreateRequest {
 
         @Override
         public String toString() {
-            return "MessageShortJson{" +
+            return "MessageShortResponse{" +
                     "id=" + id +
                     ", content='" + content + '\'' +
                     '}';

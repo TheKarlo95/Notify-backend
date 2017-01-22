@@ -2,9 +2,8 @@ package hr.karlovrbic.notify.v1.features.message;
 
 import hr.karlovrbic.notify.v1.features.message.requests.MessageCreateRequest;
 import hr.karlovrbic.notify.v1.features.shared.IBase;
-import hr.karlovrbic.notify.v1.model.json.MessageJson;
 
-import java.util.List;
+import javax.ws.rs.core.Response;
 
 /**
  * Created by Karlo Vrbic on 04.11.16..
@@ -15,22 +14,22 @@ public interface IMessage {
     }
 
     interface Presenter extends IBase.Presenter {
-        MessageJson createMessage(MessageCreateRequest eventJson);
+        Response createMessage(MessageCreateRequest eventJson, Long eventId);
 
-        List<MessageJson> getMessageByEventId(Long eventId);
+        Response getMessageByEventId(Long eventId);
 
-        MessageJson getMessageByMessageId(Long id);
+        Response getMessageByMessageId(Long id);
     }
 
     interface CreateInteractor extends IBase.Interactor {
-        MessageJson create(MessageCreateRequest eventJson);
+        Response create(MessageCreateRequest eventJson, Long eventId);
     }
 
     interface GetByEventIdInteractor extends IBase.Interactor {
-        List<MessageJson> get(Long eventId);
+        Response get(Long eventId);
     }
 
     interface GetByIdInteractor extends IBase.Interactor {
-        MessageJson get(Long id);
+        Response get(Long id);
     }
 }

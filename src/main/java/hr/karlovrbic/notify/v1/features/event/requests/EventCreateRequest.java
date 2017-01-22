@@ -175,7 +175,7 @@ public class EventCreateRequest {
 
         @Override
         public String toString() {
-            return "UserShortJson{id=" + id + '}';
+            return "UserShortResponse{id=" + id + '}';
         }
     }
 }

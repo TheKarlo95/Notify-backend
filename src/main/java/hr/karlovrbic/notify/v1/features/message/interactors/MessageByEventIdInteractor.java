@@ -2,9 +2,11 @@ package hr.karlovrbic.notify.v1.features.message.interactors;
 
 import hr.karlovrbic.notify.v1.dao.manager.JPAEMProvider;
 import hr.karlovrbic.notify.v1.features.message.IMessage;
+import hr.karlovrbic.notify.v1.features.message.response.MessageResponse;
 import hr.karlovrbic.notify.v1.model.entity.Message;
-import hr.karlovrbic.notify.v1.model.json.MessageJson;
 
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,20 +17,24 @@ public class MessageByEventIdInteractor implements IMessage.GetByEventIdInteract
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<MessageJson> get(Long eventId) {
+    public Response get(Long eventId) {
         List<Message> messages = JPAEMProvider.getEntityManager()
                 .createNamedQuery("Message.selectByEventId")
                 .setParameter("eventId", eventId)
                 .getResultList();
 
-        List<MessageJson> messageJsons = null;
-        if (!(messages == null || messages.isEmpty())) {
-            messageJsons = messages.stream()
-                    .map(Message::toJson)
+        Response response = null;
+        if (messages != null && !messages.isEmpty()) {
+            List<MessageResponse> body = messages.stream()
+                    .map(MessageResponse::fromEntity)
                     .collect(Collectors.toList());
-        }
-        JPAEMProvider.close();
 
-        return messageJsons;
+            response = Response.ok(body, MediaType.APPLICATION_JSON_TYPE).build();
+        } else {
+            response = Response.noContent().build();
+        }
+
+        JPAEMProvider.close();
+        return response;
     }
 }
