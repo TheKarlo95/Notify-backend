@@ -1,10 +1,10 @@
 package hr.karlovrbic.notify.v1.features.user.interactors;
 
 import hr.karlovrbic.notify.v1.dao.manager.JPAEMProvider;
+import hr.karlovrbic.notify.v1.features.event.response.EventResponse;
 import hr.karlovrbic.notify.v1.features.user.IUser;
 import hr.karlovrbic.notify.v1.model.entity.Event;
 import hr.karlovrbic.notify.v1.model.entity.User;
-import hr.karlovrbic.notify.v1.model.json.UserResponse;
 
 import javax.persistence.EntityManager;
 import javax.ws.rs.core.MediaType;
@@ -27,7 +27,7 @@ public class UnfollowEventInteractor implements IUser.UnfollowEventInteractor {
         } else {
             user.getSubscribedEvents().remove(event);
 
-            UserResponse body = UserResponse.fromEntity(user);
+            EventResponse body = EventResponse.fromEntity(event);
             response = Response.ok(body, MediaType.APPLICATION_JSON_TYPE).build();
         }
 
