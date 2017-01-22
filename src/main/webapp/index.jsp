@@ -4,11 +4,11 @@
 <p>
     <a href="api/v1/users">User resource</a>
     <br/>
-    <a href="api/v1/event">Event resource</a>
+    <a href="api/v1/events">Event resource</a>
     <br/>
-    <a href="api/v1/event/1/messages">Message resource</a>
+    <a href="api/v1/events/1/messages">Message resource</a>
     <br/>
-    <a href="api/v1/event/1/messages/1/comments">Comment resource</a>
+    <a href="api/v1/events/1/messages/1/comments">Comment resource</a>
 </p>
 </body>
 </html>
