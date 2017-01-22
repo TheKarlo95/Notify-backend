@@ -1,9 +1,9 @@
 package hr.karlovrbic.notify.v1.features.user;
 
+import hr.karlovrbic.notify.v1.features.event.response.EventResponse;
 import hr.karlovrbic.notify.v1.features.shared.IBase;
 import hr.karlovrbic.notify.v1.features.user.requests.UserCreateRequest;
 import hr.karlovrbic.notify.v1.features.user.requests.UserLoginRequest;
-import hr.karlovrbic.notify.v1.model.json.EventJson;
 import hr.karlovrbic.notify.v1.model.json.UserResponse;
 
 import java.util.List;
@@ -27,7 +27,11 @@ public interface IUser {
 
         UserResponse getUserByUsername(String username);
 
-        List<EventJson> getEventByCreatorId(Long creatorId);
+        List<EventResponse> getEventByCreatorId(Long creatorId);
+
+        List<EventResponse> getEventByFollowerId(Long followerId);
+
+        UserResponse followEvent(Long userId, Long eventId);
     }
 
     interface CreateInteractor extends IBase.Interactor {
@@ -51,6 +55,14 @@ public interface IUser {
     }
 
     interface GetEventsByCreatorIdInteractor extends IBase.Interactor {
-        List<EventJson> get(Long creatorId);
+        List<EventResponse> get(Long creatorId);
+    }
+
+    interface GetEventsByFollowerIdInteractor extends IBase.Interactor {
+        List<EventResponse> get(Long followerId);
+    }
+
+    interface FollowEventInteractor extends IBase.Interactor {
+        UserResponse get(Long userId, Long eventId);
     }
 }

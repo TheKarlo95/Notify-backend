@@ -1,10 +1,10 @@
 package hr.karlovrbic.notify.v1.features.user.presenters;
 
+import hr.karlovrbic.notify.v1.features.event.response.EventResponse;
 import hr.karlovrbic.notify.v1.features.user.IUser;
 import hr.karlovrbic.notify.v1.features.user.interactors.*;
 import hr.karlovrbic.notify.v1.features.user.requests.UserCreateRequest;
 import hr.karlovrbic.notify.v1.features.user.requests.UserLoginRequest;
-import hr.karlovrbic.notify.v1.model.json.EventJson;
 import hr.karlovrbic.notify.v1.model.json.UserResponse;
 import hr.karlovrbic.notify.v1.utils.UserChecker;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -24,6 +24,9 @@ public final class UserPresenter implements IUser.Presenter {
     private IUser.GetByIdInteractor getByIdInteractor;
     private IUser.GetByUsernameInteractor getByUsernameInteractor;
     private IUser.GetEventsByCreatorIdInteractor getEventsByCreatorIdInteractor;
+    private IUser.GetEventsByCreatorIdInteractor getEventsByFollowerIdInteractor;
+    private IUser.FollowEventInteractor followEventInteractor;
+
 
     public UserPresenter(IUser.View view) {
         this.view = view;
@@ -33,6 +36,8 @@ public final class UserPresenter implements IUser.Presenter {
         this.getByIdInteractor = new UserByIdInteractor();
         this.getByUsernameInteractor = new UserByUsernameInteractor();
         this.getEventsByCreatorIdInteractor = new EventsByCreatorIdInteractor();
+        this.getEventsByFollowerIdInteractor = new EventsByFollowerIdInteractor();
+        this.followEventInteractor = new FollowEventInteractor();
     }
 
     @Override
@@ -82,9 +87,27 @@ public final class UserPresenter implements IUser.Presenter {
     }
 
     @Override
-    public List<EventJson> getEventByCreatorId(Long creatorId) {
+    public List<EventResponse> getEventByCreatorId(Long creatorId) {
         if (creatorId > 0L) {
             return getEventsByCreatorIdInteractor.get(creatorId);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public List<EventResponse> getEventByFollowerId(Long followerId) {
+        if (followerId > 0L) {
+            return getEventsByFollowerIdInteractor.get(followerId);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public UserResponse followEvent(Long userId, Long eventId) {
+        if (userId > 0L && eventId > 0L) {
+            return followEventInteractor.get(userId, eventId);
         } else {
             return null;
         }

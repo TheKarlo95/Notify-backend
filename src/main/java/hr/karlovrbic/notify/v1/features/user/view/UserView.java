@@ -2,11 +2,11 @@ package hr.karlovrbic.notify.v1.features.user.view;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import hr.karlovrbic.notify.v1.features.event.response.EventResponse;
 import hr.karlovrbic.notify.v1.features.user.IUser;
 import hr.karlovrbic.notify.v1.features.user.presenters.UserPresenter;
 import hr.karlovrbic.notify.v1.features.user.requests.UserCreateRequest;
 import hr.karlovrbic.notify.v1.features.user.requests.UserLoginRequest;
-import hr.karlovrbic.notify.v1.model.json.EventJson;
 import hr.karlovrbic.notify.v1.model.json.UserResponse;
 
 import javax.ws.rs.*;
@@ -89,7 +89,31 @@ public class UserView implements IUser.View {
     @GET
     @Path("/{id}/events")
     public Response getEventsByCreatorId(@PathParam("id") long creatorId) {
-        List<EventJson> json = createPresenter().getEventByCreatorId(creatorId);
+        List<EventResponse> json = createPresenter().getEventByCreatorId(creatorId);
+
+        if (json != null) {
+            return Response.ok(json, MediaType.APPLICATION_JSON_TYPE).build();
+        } else {
+            return Response.ok().build();
+        }
+    }
+
+    @GET
+    @Path("/{id}/followed")
+    public Response getEventsByFollowerId(@PathParam("id") long followerId) {
+        List<EventResponse> json = createPresenter().getEventByCreatorId(followerId);
+
+        if (json != null) {
+            return Response.ok(json, MediaType.APPLICATION_JSON_TYPE).build();
+        } else {
+            return Response.ok().build();
+        }
+    }
+
+    @PUT
+    @Path("/{id}/followed/{eventId}")
+    public Response followEvent(@PathParam("id") long followerId) {
+        List<EventResponse> json = createPresenter().getEventByCreatorId(followerId);
 
         if (json != null) {
             return Response.ok(json, MediaType.APPLICATION_JSON_TYPE).build();

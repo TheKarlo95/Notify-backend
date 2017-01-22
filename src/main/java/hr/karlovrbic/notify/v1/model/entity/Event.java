@@ -15,9 +15,14 @@ import java.util.List;
 @Entity
 @Table(name = DB.TABLE_EVENT)
 @NamedQueries({
-        @NamedQuery(name = "Event.selectAll", query = "select e from Event as e",
+        @NamedQuery(name = "Event.selectAll",
+                query = "select e from Event as e",
                 hints = {@QueryHint(name = "org.hibernate.cacheable", value = "true")}),
-        @NamedQuery(name = "Event.selectByCreatorId", query = "select e from Event as e where e.creator.id=:creatorId",
+        @NamedQuery(name = "Event.selectByCreatorId",
+                query = "select e from Event as e where e.creator.id=:creatorId",
+                hints = {@QueryHint(name = "org.hibernate.cacheable", value = "true")})
+        @NamedQuery(name = "Event.selectByFollowerId",
+                query = "select e from Event as e inner join e.subscribedUsers as u where u.id=:followerId",
                 hints = {@QueryHint(name = "org.hibernate.cacheable", value = "true")})
 })
 public class Event implements Serializable {
