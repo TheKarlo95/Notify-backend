@@ -62,9 +62,15 @@ public class UserView implements IUser.View {
     }
 
     @PATCH
-    @Path("/{id}/followed/{eventId}")
+    @Path("/{id}/follow/{eventId}")
     public Response followEvent(@PathParam("id")Long userId, @PathParam("eventId")Long eventId) {
         return createPresenter().followEvent(userId, eventId);
+    }
+
+    @PATCH
+    @Path("/{id}/unfollow/{eventId}")
+    public Response unfollowEvent(@PathParam("id")Long userId, @PathParam("eventId")Long eventId) {
+        return createPresenter().unfollowEvent(userId, eventId);
     }
 
     private IUser.Presenter createPresenter() {

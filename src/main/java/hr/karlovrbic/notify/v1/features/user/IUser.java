@@ -30,6 +30,8 @@ public interface IUser {
         Response getEventByFollowerId(Long followerId);
 
         Response followEvent(Long userId, Long eventId);
+
+        Response unfollowEvent(Long userId, Long eventId);
     }
 
     interface CreateInteractor extends IBase.Interactor {
@@ -61,6 +63,10 @@ public interface IUser {
     }
 
     interface FollowEventInteractor extends IBase.Interactor {
-        Response get(Long userId, Long eventId);
+        Response follow(Long userId, Long eventId);
+    }
+
+    interface UnfollowEventInteractor extends IBase.Interactor {
+        Response unfollow(Long userId, Long eventId);
     }
 }

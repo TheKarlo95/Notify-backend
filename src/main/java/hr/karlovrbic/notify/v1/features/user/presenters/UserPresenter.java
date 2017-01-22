@@ -24,6 +24,7 @@ public final class UserPresenter implements IUser.Presenter {
     private IUser.GetEventsByCreatorIdInteractor getEventsByCreatorIdInteractor;
     private IUser.GetEventsByCreatorIdInteractor getEventsByFollowerIdInteractor;
     private IUser.FollowEventInteractor followEventInteractor;
+    private IUser.UnfollowEventInteractor unfollowEventInteractor;
 
 
     public UserPresenter(IUser.View view) {
@@ -36,6 +37,7 @@ public final class UserPresenter implements IUser.Presenter {
         this.getEventsByCreatorIdInteractor = new EventsByCreatorIdInteractor();
         this.getEventsByFollowerIdInteractor = new EventsByFollowerIdInteractor();
         this.followEventInteractor = new FollowEventInteractor();
+        this.unfollowEventInteractor = new UnfollowEventInteractor();
     }
 
     @Override
@@ -100,7 +102,16 @@ public final class UserPresenter implements IUser.Presenter {
     @Override
     public Response followEvent(Long userId, Long eventId) {
         if (userId > 0L && eventId > 0L) {
-            return followEventInteractor.get(userId, eventId);
+            return followEventInteractor.follow(userId, eventId);
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
+    @Override
+    public Response unfollowEvent(Long userId, Long eventId) {
+        if (userId > 0L && eventId > 0L) {
+            return unfollowEventInteractor.unfollow(userId, eventId);
         } else {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }

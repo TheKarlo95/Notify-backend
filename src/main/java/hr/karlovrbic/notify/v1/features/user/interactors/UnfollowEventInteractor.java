@@ -13,10 +13,10 @@ import javax.ws.rs.core.Response;
 /**
  * Created by Karlo Vrbic on 04.11.16..
  */
-public class FollowEventInteractor implements IUser.FollowEventInteractor {
+public class UnfollowEventInteractor implements IUser.UnfollowEventInteractor {
 
     @Override
-    public Response follow(Long userId, Long eventId) {
+    public Response unfollow(Long userId, Long eventId) {
         EntityManager em = JPAEMProvider.getEntityManager();
         User user = em.find(User.class, userId);
         Event event = em.getReference(Event.class, eventId);
@@ -25,7 +25,7 @@ public class FollowEventInteractor implements IUser.FollowEventInteractor {
         if (user == null  || event == null) {
             Response.status(Response.Status.BAD_REQUEST).build();
         } else {
-            user.getSubscribedEvents().add(event);
+            user.getSubscribedEvents().remove(event);
 
             UserResponse body = UserResponse.fromEntity(user);
             response = Response.ok(body, MediaType.APPLICATION_JSON_TYPE).build();
