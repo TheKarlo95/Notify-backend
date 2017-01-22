@@ -1,6 +1,6 @@
 package hr.karlovrbic.notify.v1.features.event.requests;
 
-import com.google.gson.GsonBuilder;
+import hr.karlovrbic.notify.v1.formatter.DateAdapter;
 import hr.karlovrbic.notify.v1.model.entity.Event;
 import hr.karlovrbic.notify.v1.model.entity.User;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -8,6 +8,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.Date;
 
 /**
  * Created by Karlo Vrbic on 04.11.16..
@@ -15,14 +17,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class EventCreateRequest {
 
-    static final String ATTRIBUTE_CREATOR = "creator";
-    static final String ATTRIBUTE_TITLE = "title";
-    static final String ATTRIBUTE_DESCRIPTION = "description";
+    private static final String ATTRIBUTE_CREATOR = "creator";
+    private static final String ATTRIBUTE_TITLE = "title";
+    private static final String ATTRIBUTE_DATE = "date";
+    private static final String ATTRIBUTE_DESCRIPTION = "description";
 
     @XmlElement(name = ATTRIBUTE_CREATOR, required = true)
     private UserShortJson creator;
     @XmlElement(name = ATTRIBUTE_TITLE, required = true)
     private String title;
+    @XmlElement(name = ATTRIBUTE_DATE, required = true)
+    @XmlJavaTypeAdapter(DateAdapter.class)
+    private Date date;
     @XmlElement(name = ATTRIBUTE_DESCRIPTION, required = true)
     private String description;
 
@@ -41,7 +47,7 @@ public class EventCreateRequest {
         UserShortJson creatorJson = null;
         User creator = event.getCreator();
         if (creator != null) {
-            creatorJson = new UserShortJson(creator.getId(), creator.getUsername());
+            creatorJson = new UserShortJson(creator.getId());
         }
 
         return new EventCreateRequest(creatorJson,
@@ -84,6 +90,7 @@ public class EventCreateRequest {
         return new EqualsBuilder()
                 .append(creator, that.creator)
                 .append(title, that.title)
+                .append(date, that.date)
                 .append(description, that.description)
                 .isEquals();
     }
@@ -93,6 +100,7 @@ public class EventCreateRequest {
         return new HashCodeBuilder(17, 37)
                 .append(creator)
                 .append(title)
+                .append(date)
                 .append(description)
                 .toHashCode();
     }
@@ -102,6 +110,7 @@ public class EventCreateRequest {
         return "EventCreateRequest{" +
                 "creator=" + creator +
                 ", title='" + title + '\'' +
+                ", date=" + date +
                 ", description='" + description + '\'' +
                 '}';
     }
@@ -109,27 +118,22 @@ public class EventCreateRequest {
     public static class UserShortJson {
 
         static final String ATTRIBUTE_ID = "id";
-        static final String ATTRIBUTE_USERNAME = "username";
 
         @XmlElement(name = ATTRIBUTE_ID, required = true)
         private Long id;
-        @XmlElement(name = ATTRIBUTE_USERNAME, required = true)
-        private String username;
 
-        private UserShortJson(Long id, String username) {
+        private UserShortJson(Long id) {
             this.id = id;
-            this.username = username;
         }
 
         public UserShortJson() {
-            this(null, null);
         }
 
         public static UserShortJson fromEntity(User user) {
             if (user == null) {
                 return null;
             } else {
-                return new UserShortJson(user.getId(), user.getUsername());
+                return new UserShortJson(user.getId());
             }
         }
 
@@ -139,14 +143,6 @@ public class EventCreateRequest {
 
         public void setId(Long id) {
             this.id = id;
-        }
-
-        public String getUsername() {
-            return username;
-        }
-
-        public void setUsername(String username) {
-            this.username = username;
         }
 
         @Override
@@ -159,7 +155,6 @@ public class EventCreateRequest {
 
             return new EqualsBuilder()
                     .append(id, that.id)
-                    .append(username, that.username)
                     .isEquals();
         }
 
@@ -167,15 +162,12 @@ public class EventCreateRequest {
         public int hashCode() {
             return new HashCodeBuilder(17, 37)
                     .append(id)
-                    .append(username)
                     .toHashCode();
         }
 
         @Override
         public String toString() {
-            return new GsonBuilder()
-                    .setPrettyPrinting()
-                    .create().toJson(this);
+            return "UserShortJson{id=" + id + '}';
         }
     }
 }

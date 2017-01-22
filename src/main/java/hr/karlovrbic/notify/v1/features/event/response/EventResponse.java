@@ -19,14 +19,15 @@ import java.util.stream.Collectors;
 @XmlRootElement
 public class EventResponse {
 
-    static final String ATTRIBUTE_ID = "id";
-    static final String ATTRIBUTE_CREATOR = "creator";
-    static final String ATTRIBUTE_TITLE = "title";
-    static final String ATTRIBUTE_DESCRIPTION = "password";
-    static final String ATTRIBUTE_CREATED_AT = "created_at";
-    static final String ATTRIBUTE_PICTURE = "picture_link";
-    static final String ATTRIBUTE_SUBSCRIBERS = "subscribers";
-    static final String ATTRIBUTE_MESSAGES = "messages";
+    private static final String ATTRIBUTE_ID = "id";
+    private static final String ATTRIBUTE_CREATOR = "creator";
+    private static final String ATTRIBUTE_TITLE = "title";
+    private static final String ATTRIBUTE_DATE = "date";
+    private static final String ATTRIBUTE_DESCRIPTION = "description";
+    private static final String ATTRIBUTE_CREATED_AT = "created_at";
+    private static final String ATTRIBUTE_PICTURE = "picture_link";
+    private static final String ATTRIBUTE_SUBSCRIBERS = "subscribers";
+    private static final String ATTRIBUTE_MESSAGES = "messages";
 
     @XmlElement(name = ATTRIBUTE_ID)
     private Long id;
@@ -34,6 +35,9 @@ public class EventResponse {
     private UserShortJson creator;
     @XmlElement(name = ATTRIBUTE_TITLE, required = true)
     private String title;
+    @XmlElement(name = ATTRIBUTE_DATE, required = true)
+    @XmlJavaTypeAdapter(DateAdapter.class)
+    private Date date;
     @XmlElement(name = ATTRIBUTE_DESCRIPTION, required = true)
     private String description;
     @XmlElement(name = ATTRIBUTE_CREATED_AT, required = true)
@@ -46,22 +50,24 @@ public class EventResponse {
     @XmlElement(name = ATTRIBUTE_MESSAGES, required = true)
     private List<MessageShortJson> messages;
 
-    private EventResponse(Long id,
-                      UserShortJson creator,
-                      String title,
-                      String description,
-                      Date createdAt,
-                      String pictureLink,
-                      List<UserShortJson> subscribers,
-                      List<MessageShortJson> messages) {
+    public EventResponse(Long id,
+                         UserShortJson creator,
+                         String title,
+                         Date date,
+                         String description,
+                         Date createdAt,
+                         String pictureLink,
+                         List<UserShortJson> subscribers,
+                         List<MessageShortJson> messages) {
         this.id = id;
         this.creator = creator;
         this.title = title;
+        this.date = date;
         this.description = description;
         this.createdAt = createdAt;
         this.pictureLink = pictureLink;
-        this.subscribers = ListUtil.getNonNull(subscribers);
-        this.messages = ListUtil.getNonNull(messages);
+        this.subscribers = subscribers;
+        this.messages = messages;
     }
 
     public EventResponse() {
@@ -79,6 +85,7 @@ public class EventResponse {
         return new EventResponse(event.getId(),
                 creator,
                 event.getTitle(),
+                event.getDate(),
                 event.getDescription(),
                 event.getCreatedAt(),
                 event.getPictureLink(),
@@ -108,6 +115,14 @@ public class EventResponse {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getDescription() {
@@ -175,6 +190,7 @@ public class EventResponse {
                 "id=" + id +
                 ", creator=" + creator +
                 ", title='" + title + '\'' +
+                ", date='" + date + '\'' +
                 ", description='" + description + '\'' +
                 ", createdAt=" + createdAt +
                 ", pictureLink='" + pictureLink + '\'' +

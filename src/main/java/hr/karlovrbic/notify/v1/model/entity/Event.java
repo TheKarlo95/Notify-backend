@@ -30,6 +30,7 @@ public class Event implements Serializable {
     static final String COLUMN_ID = "id";
     static final String COLUMN_CREATOR = "creator";
     static final String COLUMN_TITLE = "title";
+    static final String COLUMN_DATE = "date";
     static final String COLUMN_DESCRIPTION = "password";
     static final String COLUMN_CREATED_AT = "created_at";
     static final String COLUMN_PICTURE = "picture_link";
@@ -37,6 +38,7 @@ public class Event implements Serializable {
     private Long id;
     private User creator;
     private String title;
+    private Date date;
     private String description;
     private Date createdAt;
     private String pictureLink;
@@ -46,6 +48,7 @@ public class Event implements Serializable {
     public Event(Long id,
                  User creator,
                  String title,
+                 Date date,
                  String description,
                  Date createdAt,
                  String pictureLink,
@@ -54,6 +57,7 @@ public class Event implements Serializable {
         this.id = id;
         this.creator = creator;
         this.title = title;
+        this.date = date;
         this.description = description;
         this.createdAt = createdAt;
         this.pictureLink = pictureLink;
@@ -63,21 +67,23 @@ public class Event implements Serializable {
 
     public Event(User creator,
                  String title,
+                 Date date,
                  String description,
                  Date createdAt,
                  String pictureLink,
                  List<User> subscribedUsers,
                  List<Message> messages) {
-        this(null, creator, title, description, createdAt, pictureLink, subscribedUsers, messages);
+        this(null, creator, title, null, description, createdAt, pictureLink, subscribedUsers, messages);
     }
 
     public Event(User creator,
                  String title,
+                 Date date,
                  String description,
                  String pictureLink,
                  List<User> subscribedUsers,
                  List<Message> messages) {
-        this(null, creator, title, description, new Date(), pictureLink, subscribedUsers, messages);
+        this(null, creator, title, null, description, new Date(), pictureLink, subscribedUsers, messages);
     }
 
     public Event() {
@@ -115,6 +121,16 @@ public class Event implements Serializable {
 
     public void setTitle(String name) {
         this.title = name;
+    }
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = COLUMN_DATE, nullable = false)
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     @Column(name = COLUMN_DESCRIPTION, length = 1024, nullable = false)
