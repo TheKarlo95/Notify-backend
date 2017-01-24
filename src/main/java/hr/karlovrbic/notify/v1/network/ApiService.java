@@ -11,6 +11,6 @@ import retrofit2.http.POST;
  */
 public interface ApiService {
 
-    @POST("/")
+    @POST("fcm/send/")
     Call<JsonObject> sendNotification(@Body NotificationRequest request);
 }
