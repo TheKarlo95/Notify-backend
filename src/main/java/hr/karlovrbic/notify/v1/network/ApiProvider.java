@@ -30,7 +30,7 @@ public class ApiProvider {
         Converter.Factory scalarFactory = provideScalarConverter();
         HttpLoggingInterceptor.Level level = provideLogLevel();
         HttpLoggingInterceptor logger = provideLog(level);
-        Interceptor auth = provideAuthInterceprotr()
+        Interceptor auth = provideAuthInterceprotr();
         Integer networkTimoutSeconds = provideNetworkTimeout();
         OkHttpClient client = provideOkHttpClient(logger, auth, networkTimoutSeconds);
         HttpUrl endpoint = provideEndpoint();
