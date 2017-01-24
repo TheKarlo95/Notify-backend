@@ -2,8 +2,8 @@ package hr.karlovrbic.notify.v1.features.user.interactors;
 
 import hr.karlovrbic.notify.v1.dao.manager.JPAEMProvider;
 import hr.karlovrbic.notify.v1.features.user.IUser;
+import hr.karlovrbic.notify.v1.features.user.response.UserResponse;
 import hr.karlovrbic.notify.v1.model.entity.User;
-import hr.karlovrbic.notify.v1.model.json.UserResponse;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;

@@ -1,4 +1,4 @@
-package hr.karlovrbic.notify.v1.model.json;
+package hr.karlovrbic.notify.v1.features.user.response;
 
 import hr.karlovrbic.notify.v1.formatter.DateAdapter;
 import hr.karlovrbic.notify.v1.model.entity.Event;
@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 public class UserResponse {
 
     private static final String ATTRIBUTE_ID = "id";
+    private static final String ATTRIBUTE_TOKEN = "fcm_token";
     private static final String ATTRIBUTE_USERNAME = "username";
     private static final String ATTRIBUTE_EMAIL = "email";
     private static final String ATTRIBUTE_NAME = "name";
@@ -29,6 +30,8 @@ public class UserResponse {
 
     @XmlElement(name = ATTRIBUTE_ID)
     private Long id;
+    @XmlElement(name = ATTRIBUTE_TOKEN)
+    private String token;
     @XmlElement(name = ATTRIBUTE_USERNAME, required = true)
     private String username;
     @XmlElement(name = ATTRIBUTE_EMAIL, required = true)
@@ -49,6 +52,7 @@ public class UserResponse {
     private List<EventResponse> events;
 
     private UserResponse(Long id,
+                         String token,
                          String username,
                          String email,
                          String name,
@@ -58,6 +62,7 @@ public class UserResponse {
                          String profilePictureLink,
                          List<EventResponse> events) {
         this.id = id;
+        this.token = token;
         this.username = username;
         this.email = email;
         this.name = name;
@@ -78,6 +83,7 @@ public class UserResponse {
                 .collect(Collectors.toList());
 
         return new UserResponse(user.getId(),
+                user.getToken(),
                 user.getUsername(),
                 user.getEmail(),
                 user.getName(),
