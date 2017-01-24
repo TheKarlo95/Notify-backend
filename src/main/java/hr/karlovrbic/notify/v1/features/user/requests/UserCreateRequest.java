@@ -20,7 +20,7 @@ import java.util.Date;
 @XmlRootElement
 public class UserCreateRequest {
 
-    private static final String ATTRIBUTE_ID = "id";
+    private static final String ATTRIBUTE_TOKEN = "fcm_token";
     private static final String ATTRIBUTE_USERNAME = "username";
     private static final String ATTRIBUTE_PASSWORD = "password";
     private static final String ATTRIBUTE_PASSWORD_CONFIRMATION = "password_confirmation";
@@ -30,6 +30,8 @@ public class UserCreateRequest {
     private static final String ATTRIBUTE_BIRTHDAY = "birthday";
     private static final String ATTRIBUTE_PROFILE_CONFIGURATION = "profile_configuration";
 
+    @XmlElement(name = ATTRIBUTE_TOKEN)
+    private String token;
     @XmlElement(name = ATTRIBUTE_USERNAME, required = true)
     private String username;
     @XmlElement(name = ATTRIBUTE_PASSWORD, required = true)
@@ -45,11 +47,12 @@ public class UserCreateRequest {
     @XmlElement(name = ATTRIBUTE_BIRTHDAY, required = true)
     @XmlJavaTypeAdapter(DateAdapter.class)
     private Date birthDay;
-    @XmlElement(name = ATTRIBUTE_PROFILE_CONFIGURATION, required = true)
+    @XmlElement(name = ATTRIBUTE_PROFILE_CONFIGURATION)
     @XmlJavaTypeAdapter(PrivacyAdapter.class)
     private PrivacyJson privacyJson;
 
-    public UserCreateRequest(String username,
+    public UserCreateRequest(String token,
+                             String username,
                              String password,
                              String passwordConfirmation,
                              String email,
@@ -57,6 +60,7 @@ public class UserCreateRequest {
                              String surname,
                              Date birthDay,
                              PrivacyJson privacyJson) {
+        this.token = token;
         this.username = username;
         this.password = password;
         this.passwordConfirmation = passwordConfirmation;
@@ -72,11 +76,22 @@ public class UserCreateRequest {
         }
     }
 
+    public UserCreateRequest(String username,
+                             String password,
+                             String passwordConfirmation,
+                             String email,
+                             String name,
+                             String surname,
+                             Date birthDay,
+                             PrivacyJson privacyJson) {
+        this(null, username, password, passwordConfirmation, email, name, surname, birthDay, privacyJson);
+    }
+
     public UserCreateRequest() {
     }
 
     public User toEntity() {
-        return new User(username,
+        User user = new User(username,
                 password,
                 email,
                 name,
@@ -87,6 +102,9 @@ public class UserCreateRequest {
                 null,
                 null,
                 null);
+        user.setToken(token);
+
+        return user;
     }
 
     public String getUsername() {

@@ -1,7 +1,6 @@
 package hr.karlovrbic.notify.v1.model.entity;
 
 import hr.karlovrbic.notify.v1.DB;
-import hr.karlovrbic.notify.v1.model.json.MessageJson;
 import hr.karlovrbic.notify.v1.utils.ListUtil;
 
 import javax.persistence.*;
@@ -89,9 +88,5 @@ public class Message implements Serializable {
 
     public void setComments(List<Comment> comments) {
         this.comments = ListUtil.getNonNull(comments);
-    }
-
-    public MessageJson toJson() {
-        return MessageJson.fromEntity(this);
     }
 }

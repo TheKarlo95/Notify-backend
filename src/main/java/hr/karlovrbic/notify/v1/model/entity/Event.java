@@ -1,7 +1,6 @@
 package hr.karlovrbic.notify.v1.model.entity;
 
 import hr.karlovrbic.notify.v1.DB;
-import hr.karlovrbic.notify.v1.model.json.EventJson;
 import hr.karlovrbic.notify.v1.utils.ListUtil;
 
 import javax.persistence.*;
@@ -87,10 +86,6 @@ public class Event implements Serializable {
     }
 
     public Event() {
-    }
-
-    public EventJson toJson() {
-        return EventJson.fromEntity(this);
     }
 
     @Id

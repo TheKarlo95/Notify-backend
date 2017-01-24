@@ -18,10 +18,10 @@ public class UserLoginInteractor implements IUser.LoginInteractor {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Response login(UserLoginRequest userLoginRequest) {
+    public Response login(UserLoginRequest request) {
         List<User> users = JPAEMProvider.getEntityManager()
                 .createNamedQuery("User.selectByUsername")
-                .setParameter("username", userLoginRequest.getUsername())
+                .setParameter("username", request.getUsername())
                 .getResultList();
 
         Response response = null;
@@ -33,7 +33,7 @@ public class UserLoginInteractor implements IUser.LoginInteractor {
             if (user != null) {
                 UserResponse body = UserResponse.fromEntity(user);
 
-                if (Objects.equals(userLoginRequest.getPassword(), user.getPassword())) {
+                if (Objects.equals(request.getPassword(), user.getPassword())) {
                     response = Response.ok(body, MediaType.APPLICATION_JSON_TYPE).build();
                 } else {
                     response = Response.status(Response.Status.UNAUTHORIZED).build();

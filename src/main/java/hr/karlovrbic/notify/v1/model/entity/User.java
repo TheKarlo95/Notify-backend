@@ -2,7 +2,6 @@ package hr.karlovrbic.notify.v1.model.entity;
 
 import hr.karlovrbic.notify.v1.DB;
 import hr.karlovrbic.notify.v1.model.Privacy;
-import hr.karlovrbic.notify.v1.model.json.UserJson;
 import hr.karlovrbic.notify.v1.utils.ListUtil;
 
 import javax.persistence.*;
@@ -24,6 +23,7 @@ import java.util.List;
 public class User implements Serializable {
 
     private static final String COLUMN_ID = "id";
+    private static final String COLUMN_TOKEN = "fcm_token";
     private static final String COLUMN_USERNAME = "username";
     private static final String COLUMN_PASSWORD = "password";
     private static final String COLUMN_EMAIL = "email";
@@ -50,6 +50,7 @@ public class User implements Serializable {
 
 
     public User(Long id,
+                String token,
                 String username,
                 String password,
                 String email,
@@ -63,6 +64,7 @@ public class User implements Serializable {
                 List<Event> subscribedEvents,
                 List<Comment> comments) {
         this.id = id;
+        this.token = token;
         this.username = username;
         this.password = password;
         this.email = email;
@@ -79,6 +81,35 @@ public class User implements Serializable {
         this.createdEvents = ListUtil.getNonNull(createdEvents);
         this.subscribedEvents = ListUtil.getNonNull(subscribedEvents);
         this.comments = ListUtil.getNonNull(comments);
+    }
+
+    public User(Long id,
+                String username,
+                String password,
+                String email,
+                String name,
+                String surname,
+                Date birthDay,
+                Date createdAt,
+                ProfileConfiguration profileConfiguration,
+                String profilePictureLink,
+                List<Event> createdEvents,
+                List<Event> subscribedEvents,
+                List<Comment> comments) {
+        this(id,
+                null,
+                username,
+                password,
+                email,
+                name,
+                surname,
+                birthDay,
+                createdAt,
+                profileConfiguration,
+                profilePictureLink,
+                createdEvents,
+                subscribedEvents,
+                comments);
     }
 
     public User(String username,
@@ -160,10 +191,6 @@ public class User implements Serializable {
     public User() {
     }
 
-    public UserJson toJson() {
-        return UserJson.fromEntity(this);
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = COLUMN_ID)
@@ -175,6 +202,7 @@ public class User implements Serializable {
         this.id = id;
     }
 
+    @Column(name = COLUMN_TOKEN, length = 200)
     public String getToken() {
         return token;
     }

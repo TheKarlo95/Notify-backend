@@ -2,6 +2,7 @@ package hr.karlovrbic.notify.v1.features.user.view;
 
 import hr.karlovrbic.notify.v1.features.user.IUser;
 import hr.karlovrbic.notify.v1.features.user.presenters.UserPresenter;
+import hr.karlovrbic.notify.v1.features.user.requests.TokenUpdateRequest;
 import hr.karlovrbic.notify.v1.features.user.requests.UserCreateRequest;
 import hr.karlovrbic.notify.v1.features.user.requests.UserLoginRequest;
 import hr.karlovrbic.notify.v1.http.PATCH;
@@ -41,6 +42,12 @@ public class UserView implements IUser.View {
     @Path("/{id}")
     public Response getUsersById(@PathParam("id") long id) {
         return createPresenter().getUserById(id);
+    }
+
+    @PATCH
+    @Path("/{id}/token")
+    public Response updateToken(@PathParam("id") long id, TokenUpdateRequest request) {
+        return createPresenter().updateToken(id, request);
     }
 
     @GET

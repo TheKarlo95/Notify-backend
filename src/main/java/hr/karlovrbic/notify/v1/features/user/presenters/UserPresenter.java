@@ -2,6 +2,7 @@ package hr.karlovrbic.notify.v1.features.user.presenters;
 
 import hr.karlovrbic.notify.v1.features.user.IUser;
 import hr.karlovrbic.notify.v1.features.user.interactors.*;
+import hr.karlovrbic.notify.v1.features.user.requests.TokenUpdateRequest;
 import hr.karlovrbic.notify.v1.features.user.requests.UserCreateRequest;
 import hr.karlovrbic.notify.v1.features.user.requests.UserLoginRequest;
 import hr.karlovrbic.notify.v1.utils.UserChecker;
@@ -18,6 +19,7 @@ public final class UserPresenter implements IUser.Presenter {
     private IUser.View view;
     private IUser.CreateInteractor createInteractor;
     private IUser.LoginInteractor loginInteractor;
+    private IUser.UpdateTokenInteractor updateTokenInteractor;
     private IUser.GetAllInteractor getAllInteractor;
     private IUser.GetByIdInteractor getByIdInteractor;
     private IUser.GetByUsernameInteractor getByUsernameInteractor;
@@ -31,6 +33,7 @@ public final class UserPresenter implements IUser.Presenter {
         this.view = view;
         this.createInteractor = new UserCreateInteractor();
         this.loginInteractor = new UserLoginInteractor();
+        this.updateTokenInteractor = new UpdateTokenInteractor();
         this.getAllInteractor = new UserAllInteractor();
         this.getByIdInteractor = new UserByIdInteractor();
         this.getByUsernameInteractor = new UserByUsernameInteractor();
@@ -53,6 +56,15 @@ public final class UserPresenter implements IUser.Presenter {
     public Response loginUser(UserLoginRequest request) {
         if (isValidLoginRequest(request)) {
             return loginInteractor.login(request);
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
+
+    @Override
+    public Response updateToken(long id, TokenUpdateRequest request) {
+        if (id > 0L) {
+            return updateTokenInteractor.updateToken(id, request);
         } else {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }

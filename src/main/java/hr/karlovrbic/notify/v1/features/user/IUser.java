@@ -1,6 +1,7 @@
 package hr.karlovrbic.notify.v1.features.user;
 
 import hr.karlovrbic.notify.v1.features.shared.IBase;
+import hr.karlovrbic.notify.v1.features.user.requests.TokenUpdateRequest;
 import hr.karlovrbic.notify.v1.features.user.requests.UserCreateRequest;
 import hr.karlovrbic.notify.v1.features.user.requests.UserLoginRequest;
 
@@ -19,6 +20,8 @@ public interface IUser {
 
         Response loginUser(UserLoginRequest request);
 
+        Response updateToken(long id, TokenUpdateRequest request);
+
         Response getAllUsers();
 
         Response getUserById(Long id);
@@ -35,11 +38,15 @@ public interface IUser {
     }
 
     interface CreateInteractor extends IBase.Interactor {
-        Response create(UserCreateRequest userCreateRequest);
+        Response create(UserCreateRequest request);
     }
 
     interface LoginInteractor extends IBase.Interactor {
-        Response login(UserLoginRequest userLoginRequest);
+        Response login(UserLoginRequest request);
+    }
+
+    interface UpdateTokenInteractor extends IBase.Interactor {
+        Response updateToken(Long id, TokenUpdateRequest request);
     }
 
     interface GetAllInteractor extends IBase.Interactor {
