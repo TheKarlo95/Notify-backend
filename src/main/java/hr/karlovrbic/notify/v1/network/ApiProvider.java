@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 public class ApiProvider {
 
     private static final int NETWORK_TIMEOUT_SECONDS = 40;
-    private static final String API_URL = "https://fcm.googleapis.com/fcm/send";
+    private static final String API_URL = "https://fcm.googleapis.com/fcm/send/";
     private static final String API_KEY = "AAAA1-xCI9E:APA91bG7vVmCH3eo3ORNOS0phS2ymJh6ZoWpLWz7qL4ten5xEvMJzIVTfK_RvQnsVeOB3aCaFgsSCopNhHiZFUrw_t7S9csOS6Mp6Km3VrbYFIM9gUqDqCYodWh4KWNFQFIDyzpfLG5y";
 
     private static final ApiService service;
