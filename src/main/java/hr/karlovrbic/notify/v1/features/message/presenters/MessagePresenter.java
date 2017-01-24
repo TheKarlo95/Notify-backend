@@ -6,7 +6,10 @@ import hr.karlovrbic.notify.v1.features.message.IMessage;
 import hr.karlovrbic.notify.v1.features.message.interactors.MessageByEventIdInteractor;
 import hr.karlovrbic.notify.v1.features.message.interactors.MessageByIdInteractor;
 import hr.karlovrbic.notify.v1.features.message.interactors.MessageCreateInteractor;
+import hr.karlovrbic.notify.v1.features.message.interactors.SendNotificationInteractor;
 import hr.karlovrbic.notify.v1.features.message.requests.MessageCreateRequest;
+import hr.karlovrbic.notify.v1.features.message.response.MessageResponse;
+import hr.karlovrbic.notify.v1.features.message.response.NotificationRequest;
 
 import javax.ws.rs.core.Response;
 
@@ -17,6 +20,7 @@ public class MessagePresenter implements IMessage.Presenter {
 
     private IMessage.View view;
     private IMessage.CreateInteractor createInteractor;
+    private IMessage.SendNotificationInteractor sendNotificationInteractor;
     private IMessage.GetByEventIdInteractor getByEventIdInteractor;
     private IMessage.GetByIdInteractor getByIdInteractor;
     private IEvent.GetByIdInteractor getEventByIdInteractor;
@@ -24,6 +28,7 @@ public class MessagePresenter implements IMessage.Presenter {
     public MessagePresenter(IMessage.View view) {
         this.view = view;
         this.createInteractor = new MessageCreateInteractor();
+        this.sendNotificationInteractor = new SendNotificationInteractor();
         this.getByEventIdInteractor = new MessageByEventIdInteractor();
         this.getByIdInteractor = new MessageByIdInteractor();
         this.getEventByIdInteractor = new EventByIdInteractor();
@@ -32,7 +37,19 @@ public class MessagePresenter implements IMessage.Presenter {
     @Override
     public Response createMessage(MessageCreateRequest request, Long eventId) {
         if (isValidRequest(request)) {
-            return createInteractor.create(request, eventId);
+            Response response = createInteractor.create(request, eventId);
+
+            MessageResponse message = (MessageResponse) response.getEntity();
+            MessageResponse.EventShortResponse event = message.getEvent();
+
+            NotificationRequest notification = new NotificationRequest(event.getId(),
+                    event.getCreator().getId(),
+                    event.getTitle(),
+                    message.getContent(),
+                    NotificationRequest.Notification.MAIN_CLICK_ACTION);
+
+            sendNotificationInteractor.send(notification);
+            return response;
         } else {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }

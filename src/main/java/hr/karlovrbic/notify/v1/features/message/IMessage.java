@@ -1,6 +1,7 @@
 package hr.karlovrbic.notify.v1.features.message;
 
 import hr.karlovrbic.notify.v1.features.message.requests.MessageCreateRequest;
+import hr.karlovrbic.notify.v1.features.message.response.NotificationRequest;
 import hr.karlovrbic.notify.v1.features.shared.IBase;
 
 import javax.ws.rs.core.Response;
@@ -31,5 +32,9 @@ public interface IMessage {
 
     interface GetByIdInteractor extends IBase.Interactor {
         Response get(Long id);
+    }
+
+    interface SendNotificationInteractor {
+        void send(NotificationRequest notification);
     }
 }
