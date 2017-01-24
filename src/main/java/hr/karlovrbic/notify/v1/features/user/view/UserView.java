@@ -33,7 +33,7 @@ public class UserView implements IUser.View {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/sendNotification")
+    @Path("/login")
     public Response login(UserLoginRequest request) {
         return createPresenter().loginUser(request);
     }
