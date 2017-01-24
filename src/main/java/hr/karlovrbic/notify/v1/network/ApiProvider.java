@@ -3,6 +3,7 @@ package hr.karlovrbic.notify.v1.network;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import okhttp3.HttpUrl;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Converter;
@@ -29,8 +30,9 @@ public class ApiProvider {
         Converter.Factory scalarFactory = provideScalarConverter();
         HttpLoggingInterceptor.Level level = provideLogLevel();
         HttpLoggingInterceptor logger = provideLog(level);
+        Interceptor auth = provideAuthInterceprotr()
         Integer networkTimoutSeconds = provideNetworkTimeout();
-        OkHttpClient client = provideOkHttpClient(logger, networkTimoutSeconds);
+        OkHttpClient client = provideOkHttpClient(logger, auth, networkTimoutSeconds);
         HttpUrl endpoint = provideEndpoint();
 
         service = provideApiService(client, gsonFactory, scalarFactory, endpoint);
@@ -55,11 +57,12 @@ public class ApiProvider {
         return retrofit.create(ApiService.class);
     }
 
-    private static OkHttpClient provideOkHttpClient(HttpLoggingInterceptor logger, Integer networkTimoutSeconds) {
+    private static OkHttpClient provideOkHttpClient(HttpLoggingInterceptor logger, Interceptor auth, Integer networkTimoutSeconds) {
         return new OkHttpClient.Builder()
                 .readTimeout(networkTimoutSeconds, TimeUnit.SECONDS)
                 .connectTimeout(networkTimoutSeconds, TimeUnit.SECONDS)
                 .addInterceptor(logger)
+                .addInterceptor(auth)
                 .build();
     }
 
