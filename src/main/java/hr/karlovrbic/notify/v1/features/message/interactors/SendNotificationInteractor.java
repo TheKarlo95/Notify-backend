@@ -16,6 +16,7 @@ public class SendNotificationInteractor implements IMessage.SendNotificationInte
 
     private static final String RESPONSE_SUCCESS = "message_id";
     private static final String RESPONSE_FAILURE = "error";
+    private static final String API_KEY = "AAAA1-xCI9E:APA91bG7vVmCH3eo3ORNOS0phS2ymJh6ZoWpLWz7qL4ten5xEvMJzIVTfK_RvQnsVeOB3aCaFgsSCopNhHiZFUrw_t7S9csOS6Mp6Km3VrbYFIM9gUqDqCYodWh4KWNFQFIDyzpfLG5y";
 
     private ApiService service;
 
@@ -25,7 +26,7 @@ public class SendNotificationInteractor implements IMessage.SendNotificationInte
 
     @Override
     public void send(NotificationRequest request) {
-        service.sendNotification(request).enqueue(new Callback<JsonObject>() {
+        service.sendNotification("key=" + API_KEY,request).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, retrofit2.Response<JsonObject> response) {
                 if (response.isSuccessful()) {

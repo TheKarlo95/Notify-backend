@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import hr.karlovrbic.notify.v1.features.message.response.NotificationRequest;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 /**
@@ -11,6 +12,6 @@ import retrofit2.http.POST;
  */
 public interface ApiService {
 
-    @POST("fcm/send/")
-    Call<JsonObject> sendNotification(@Body NotificationRequest request);
+    @POST("fcm/send")
+    Call<JsonObject> sendNotification(@Header("Authorization") String auth, @Body NotificationRequest request);
 }
